@@ -1,0 +1,12 @@
+.root-menu-container {
+    height: 100vh;
+ }
+
+
+.grid-container {
+    display: grid;
+    height: 100vh; 
+    margin-left: 20px;
+    grid-template-rows: 10% 90%;
+  }
+  

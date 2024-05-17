@@ -1,0 +1,18 @@
+.button-wrapper{
+    width: 150px;
+    background-color: #5570F1;
+    border-radius: 5px;
+}
+
+
+.button-wrapper:hover {
+    cursor: pointer;
+}
+
+.button-text {
+    text-align: center;
+    color: white;
+    font-family: "Nunito";
+    padding: 15px;
+
+}

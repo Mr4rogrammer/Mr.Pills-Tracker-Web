@@ -1,0 +1,47 @@
+.new-pill{
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    height: 100%;
+    font-size: 20px;
+    margin-bottom: -5px;
+}
+
+.pills-grid-container {
+    display: grid;
+    left: auto;
+    grid-template-columns: 50% 50%;
+  }
+
+  .pills-input-title {
+    font-size: 14px;
+    padding-left: 2px;
+    color: black;
+    font-family: "Nunito";
+    margin-bottom: 4px;
+    margin-left: 7px;
+}
+
+.pills-reminder-title {
+    font-size: 12px;
+    padding-left: 5px;
+    color: black;
+    font-family: "Nunito";
+}
+
+.reminder-wrapper{
+    display: flex;
+    flex-direction: row;
+}
+
+.pills-check-box{
+   border-radius: 120%;
+
+}
+
+.pills-check-box:hover {
+    cursor: pointer;
+}
+
+.left-margin-20 {
+    margin-left: 20px;
+}

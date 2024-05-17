@@ -1,0 +1,41 @@
+.input-box-container {
+    border: 1px solid #BDBDBD;
+    width: 500px;
+    border-radius: 8px;
+    box-shadow: 3px 3px 10px 6px rgb(0, 0, 0,0,06);
+    color: #333;
+}
+
+.input-text-style {
+    border: none;         /* Remove border */
+    padding: 10px;           /* Remove padding */
+    margin: 0;            /* Remove margin */
+    outline: none;        /* Remove outline */
+    background: none;     /* Remove background */
+    box-shadow: none;     /* Remove box shadow */
+    font: inherit;        /* Inherit font properties from parent */
+    color: inherit;  
+    width: 95%;
+    font-weight: 100;
+    color: #5E6366;
+    font-family: "Nunito";
+}
+
+.input-title {
+    font-size: 14px;
+    padding-left: 2px;
+    color: black;
+    font-family: "Nunito";
+    margin-bottom: 4px;
+}
+
+.input-container {
+    margin-top: 2px;
+    padding: 5px;
+}
+
+.input-area-height {
+    height: 100px;
+    resize: none;      /* Disable resizing */
+
+}

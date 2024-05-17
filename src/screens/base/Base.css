@@ -1,0 +1,21 @@
+.base-wrapper {
+    background-color: white;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: left;
+}
+
+.base-column-one {
+    width: 0%;
+}
+
+.base-column-two {
+    width: 100%;
+    padding: 10px;
+}
