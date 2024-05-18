@@ -4,9 +4,9 @@ function DashBoard() {
 
     return(
 
-        <>
+        <div className="fade-in">
         <p>DashBoard</p>
-        </>
+        </div>
     )
 
 }

@@ -4,13 +4,36 @@ import { auth, googleAuthProvider } from '../../config/firebase';
 import { signInWithPopup } from "firebase/auth";
 import { useEffect, useState } from 'react';
 import Base from '../base/Base';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+
+  function infoToast(message) {
+    toast.info(message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light"
+    });
+}
+
   const [email, setEmail] = useState('');
 
   useEffect(() => {
     setEmail(localStorage.getItem('email'))
   })
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "scroll"
+    };
+  }, []);
 
   const handleGoogleAuth = () => {
     signInWithPopup(auth, googleAuthProvider)
@@ -23,16 +46,25 @@ function App() {
         localStorage.setItem('image', user.photoURL)
       })
       .catch((error) => {
-        console.log(error.errorCode);
-        console.log(error.message);
-        console.log(error.email);
-        console.log(error.credential);
+        infoToast("Something went wrong, please try again 🥲")
       });
   }
 
   return (
 
-<center>
+    <center>
+       <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+        />
       {email ? <Base /> :
         <div className="Login">
           <div className="content-wrapper">
@@ -50,7 +82,7 @@ function App() {
                 ]}
                 wrapper="span"
                 speed={10}
-                style={{ fontSize: '2em',  color: 'black', fontFamily: 'Poppins', }}
+                style={{ fontSize: '2em', color: 'black', fontFamily: 'Poppins', }}
                 repeat={Infinity}
               />
               <div className="login-button" onClick={handleGoogleAuth}>

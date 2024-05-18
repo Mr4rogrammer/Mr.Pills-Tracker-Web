@@ -1,3 +1,16 @@
+.fade-in {
+    animation: fade-in 3s;
+  }
+  
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 100;
+    }
+  }
+
 .new-pill{
     font-family: 'Poppins', sans-serif;
     display: flex;
@@ -44,4 +57,19 @@
 
 .left-margin-20 {
     margin-left: 20px;
+}
+
+.pills-radio-box:hover {
+    cursor: pointer;
+}
+
+.pills-radio-title {
+    margin-left: 5px;
+    margin-top: 16px;
+    font-family: "Nunito";
+    font-size: 12px;
+}
+
+.show-cusors:hover {
+    cursor: pointer;
 }

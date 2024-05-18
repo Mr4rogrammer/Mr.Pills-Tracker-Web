@@ -1,9 +1,148 @@
+import { useEffect } from "react";
 import "./ListOfPills.css"
+import { getDatabase, ref, onValue, remove } from "firebase/database";
+import { firebaseClearString } from "../Utils";
+import { useState } from "react";
 
-function ListOfPills() {
-    return(<>
-    
-    </>)
+import * as React from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import BarLoader from "react-spinners/BarLoader";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Empty from "../../../component/empty/Empty";
+import animationData from '../../../lotiflies/nodata.json';
+
+
+function ListOfPills({ pillEditFunction }) {
+    const database = getDatabase();
+    const [dataFromFirebase, setDataFromFirebase] = useState(null);
+    const [isPageLoaded, setIsPageLoaded] = useState(false)
+    const [emptyScreenMessage, setEmptyScreenMessage] = useState("No data found for your account.🥺 ")
+    const [emptyScreenMessageIcon, setEmptyScreenMessageIcon] = useState(animationData)
+
+
+    function errorToast(message) {
+        toast.warn(message, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light"
+        });
+    }
+
+    function successToast(message) {
+        toast.success(message, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light"
+        });
+    }
+
+
+    function deleteData(key) {
+        const db = getDatabase();
+        const currentUserEmail = firebaseClearString(localStorage.getItem('email'))
+        const itemRef = ref(db, 'pillsData/' + currentUserEmail + "/" + key);
+        remove(itemRef).then(() => {
+            successToast('Pill deleted successfully')
+        }).catch((error) => {
+            errorToast(error.message)
+        });
+    }
+
+    function editItem(key) {
+        pillEditFunction(key)
+    }
+
+
+    useEffect(() => {
+        const currentUserEmail = firebaseClearString(localStorage.getItem('email'))
+        const starCountRef = ref(database, 'pillsData/' + currentUserEmail);
+        onValue(starCountRef, (snapshot) => {
+            const data = snapshot.val();
+            setDataFromFirebase(null);
+            setDataFromFirebase(data);
+            setIsPageLoaded(true)
+            if(data == null || data.length == 0) {
+                setIsPageLoaded(false);
+                setEmptyScreenMessage("No data found for your account.🥺 ")
+                setEmptyScreenMessageIcon(animationData)
+            }
+        });
+    }, [])
+    return (<div className="no-scroll fade-in">
+        <BarLoader
+            width={"100%"}
+            color="#364ad6"
+            loading={!isPageLoaded}
+            height={2}
+            size={15}
+        />
+
+        <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+        />
+        {
+            isPageLoaded ? <div className="table-container">
+                <table className="pill-table ">
+                    <thead>
+                        <tr>
+                            <th className="table-heading pill-th">Pill Name</th>
+                            <th className="table-heading pill-th">Pill Discription</th>
+                            <th className="table-heading pill-th">Date</th>
+                            <th className="table-heading pill-th">Timing</th>
+                            <th className="table-heading pill-th">Before or After</th>
+                            <th className="table-heading pill-th">Remaining Pills</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scrollable" className="pills-table-body">
+
+                        {dataFromFirebase && Object.keys(dataFromFirebase).map((key) => (
+                            <><td colSpan="6" style={{ paddingTop: '30px' }}></td>
+                                <tr key={key} className="pills-each-row" >
+                                <td> <div className="table-heading">{dataFromFirebase[key].pillName}</div></td>
+                                <td> <div className="table-heading">{dataFromFirebase[key].pillDiscription}</div></td>
+                                    <td><div className="table-heading">{dataFromFirebase[key].date}</div></td>
+                                    <td><div className="table-heading">{dataFromFirebase[key].time}</div></td>
+                                    <td><div className="table-heading">{dataFromFirebase[key].afterOrBefore}</div></td>
+                                    <td><div className="table-heading">{dataFromFirebase[key].usedPills+" / "+dataFromFirebase[key].count}</div></td>
+                                    <td>
+                                        <div className="action-button">
+                                            <div color="error" className="edit-action-button" onClick={(e) => editItem(key)}><EditIcon /></div>
+
+                                            <div color="error" className="delete-action-button" onClick={(e) => deleteData(key)}><DeleteIcon /></div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+                            </>
+
+                        ))}
+                    </tbody>
+                </table>
+            </div> : <Empty message={emptyScreenMessage} animationData={emptyScreenMessageIcon}/>
+        }
+    </div>)
 }
 
 export default ListOfPills;

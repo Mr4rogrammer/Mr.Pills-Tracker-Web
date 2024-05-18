@@ -4,6 +4,7 @@ import { useState } from 'react';
 import "./Base.css"
 import DashBoard from "../dashboard/DashBoard";
 import Menu from "../Menu/Menu";
+import Setting from "../setting/Setting";
 function Base() {
     const [selctedIndex, setSelectedIndex] = useState(0);
 
@@ -29,17 +30,23 @@ function Base() {
                     <th class="base-column-one">
                         <NavigationBar onItemClick={handleNavigationSelected} />
                     </th>
-                    <th class="base-column-two">
+                    <th class="base-column-two fade-in">
 
+                        <div className="scrollable-wrapper">
                         {
+                           
                             (() => {
+
                                 if (selctedIndex === 0) {
                                     return <DashBoard />;
-                                } else if (selctedIndex === 1){
+                                } else if (selctedIndex === 1) {
                                     return <Menu />;
+                                } else if (selctedIndex === 2) {
+                                    return <Setting/>
                                 }
                             })()
                         }
+                        </div>
 
 
                     </th>

@@ -1,0 +1,114 @@
+.fade-in {
+    animation: fade-in 3s;
+  }
+  
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 100;
+    }
+  }
+
+
+
+
+.table-heading {
+    font-size: 12px;
+    padding-left: 2px;
+    color: black;
+    font-family: "Nunito";
+    text-align: left;
+    table-layout:fixed;
+}
+
+.table-container {
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.table-pills-data {
+    margin-top: 10%;
+}
+
+.pill-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+thead {
+    /* Fix the thead at the top */
+    position: sticky;
+    top: 0;
+    table-layout:fixed;
+    width: calc( 100% - 1em )
+   
+    /* Optional: Adjust the background color of the thead */
+}
+
+.pill-th {
+    width: calc(100% / 6.5);
+    /* Set the width of each th to be 20% of the table width (5 columns) */
+    text-align: left;
+    padding-bottom: 15px;
+    border-bottom: 0.1px solid rgba(183, 183, 183, 0.496);
+}
+
+.pills-each-row:hover td {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.table-container::-webkit-scrollbar {
+    display: none;
+}
+
+.pills-menu-option {
+    background-color: red;
+}
+
+.pill-list-barloader {
+    background-color: red;
+    width: 100%;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+
+.pills-table-body {
+    width: 100%;
+    overflow:auto;
+}
+
+
+.menu-item-div {
+    width: 100%;
+    height: 100%;
+    background-color: red;
+}
+
+
+.action-button {
+    width: 100%;
+    justify-content: space-between;
+    align-items:  space-between;
+    display: flex;
+}
+
+.edit-action-button:hover {
+    color: green;
+    cursor: pointer;
+}
+
+.delete-action-button:hover {
+    color: red;
+    cursor: pointer;
+}
+
+th, td {
+    padding-left: 5px;
+    padding-right: 5px;
+    overflow-wrap: break-word;
+  }

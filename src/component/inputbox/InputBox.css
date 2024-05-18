@@ -39,3 +39,7 @@
     resize: none;      /* Disable resizing */
 
 }
+
+.input-text-style::placeholder {
+    color: rgba(173, 173, 173, 0.467); /* Set placeholder color */
+  }

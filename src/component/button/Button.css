@@ -1,18 +1,62 @@
-.button-wrapper{
+.button-with-spinner {
     width: 150px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
     background-color: #5570F1;
-    border-radius: 5px;
-}
-
-
-.button-wrapper:hover {
-    cursor: pointer;
-}
-
-.button-text {
-    text-align: center;
     color: white;
-    font-family: "Nunito";
-    padding: 15px;
-
-}
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    height: 45px;
+    position: relative;
+    transition: background-color 0.3s;
+  }
+  
+  .button-with-spinner:disabled {
+    background-color: #5570F1;
+    cursor: not-allowed;
+  }
+  
+  .spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .spinner {
+    animation: rotate 2s linear infinite;
+    width: 240px;
+    height: 20px;
+  }
+  
+  .path {
+    stroke: #ffffff;
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes dash {
+    0% {
+      stroke-dasharray: 1, 150;
+      stroke-dashoffset: 0;
+    }
+    50% {
+      stroke-dasharray: 90, 150;
+      stroke-dashoffset: -35;
+    }
+    100% {
+      stroke-dasharray: 90, 150;
+      stroke-dashoffset: -124;
+    }
+  }
+  
