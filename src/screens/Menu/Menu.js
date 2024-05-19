@@ -1,12 +1,9 @@
 import "./Menu.css"
 import Spinner from "../../component/spinner/Spinner"
-import dropDowmModelOptions from "./Utils";
-
+import dropDowmModelOptions from "../../../src/screens/Utils";
 import { useState } from "react";
-
 import Pills from "./pills/Pills";
 import ListOfPills from "./list-of-pills/ListOfPills";
-
 function Menu() {
     const [selected, setSelected] = useState("Add a pill")
     const [selectedKey, setSelectedKey] = useState(0)
@@ -18,18 +15,15 @@ function Menu() {
         setEditKey(key)
         setIsEditable(true)
     }
-
     function moveToPillList() {
         setSelectedKey(2)
         setSelected("List of pill's")
     }
-
     function onKeySelected(key) {
         setIsEditable(false)
         setEditKey("")
         setSelectedKey(key)
     }
-
     return (
         <>
             <div className="grid-container">
@@ -46,12 +40,9 @@ function Menu() {
                             }
                         })()
                     }
-
                 </div>
             </div>
         </>
     )
-
 }
-
 export default Menu;

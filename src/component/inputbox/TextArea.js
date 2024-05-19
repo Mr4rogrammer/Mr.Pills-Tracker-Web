@@ -1,8 +1,6 @@
 import "./InputBox.css"
-
 function TextArea({value, onChange, placeholder, title, inputType}) {
     return (<>
-
             <div className="input-container">
                 <p className="input-title">{title}</p>
                 <div className="input-box-container">
@@ -10,9 +8,7 @@ function TextArea({value, onChange, placeholder, title, inputType}) {
                         icon={require('../../images/logo.svg').default}
                     />
                 </div>
-
             </div>
     </>)
 }
-
 export default TextArea;

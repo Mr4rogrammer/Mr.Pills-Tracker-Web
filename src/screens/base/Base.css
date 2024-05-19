@@ -1,7 +1,6 @@
 .fade-in {
     animation: fade-in 3s;
   }
-  
   @keyframes fade-in {
     from {
       opacity: 0;
@@ -10,34 +9,26 @@
       opacity: 100;
     }
   }
-
-
-
 .base-wrapper {
     background-color: white;
 }
-
 table {
     width: 100%;
     border-collapse: collapse;
 }
-
 th, td {
     text-align: left;
 }
-
 .base-column-one {
     position: sticky;
     background-color: #ffffff; /* Change to your background color */
     z-index: 1;
 }
-
 .base-column-two {
     width: 100%;
     padding: 10px;
     overflow: auto;
 }
-
 .scrollable-wrapper {
     min-width: 100%; /* Ensure the wrapper fills the available width */
     display: inline-block; /* Ensure the wrapper doesn't expand unnecessarily */

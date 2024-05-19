@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import "./ListOfPills.css"
-import { getDatabase, ref, onValue, remove } from "firebase/database";
-import { firebaseClearString } from "../Utils";
-import { useState } from "react";
-
+import { getDatabase, ref, remove } from "firebase/database";
+import { firebaseClearString } from "../../Utils";
+import { useState, useContext } from "react";
 import * as React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,24 +11,22 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Empty from "../../../component/empty/Empty";
 import animationData from '../../../lotiflies/nodata.json';
-
-
+import { getPillsUrlForId } from "../../../config/firebaseUrlBuilder";
+import { convertTo12HourFormat } from "../../Utils";
+import { FirebaseContext } from "../../../FirebaseContext";
 function ListOfPills({ pillEditFunction }) {
-    const database = getDatabase();
+    const data = useContext(FirebaseContext);
     const [dataFromFirebase, setDataFromFirebase] = useState(null);
     const [isPageLoaded, setIsPageLoaded] = useState(false)
     const [emptyScreenMessage, setEmptyScreenMessage] = useState("No data found for your account.🥺 ")
     const [emptyScreenMessageIcon, setEmptyScreenMessageIcon] = useState(animationData)
     const [expandedItems, setExpandedItems] = useState({});
-
-
     const toggleReadMore = (index) => {
         setExpandedItems((prev) => ({
             ...prev,
             [index]: !prev[index],
         }));
     };
-
     function errorToast(message) {
         toast.warn(message, {
             position: "top-center",
@@ -42,7 +39,6 @@ function ListOfPills({ pillEditFunction }) {
             theme: "light"
         });
     }
-
     function successToast(message) {
         toast.success(message, {
             position: "top-center",
@@ -55,39 +51,30 @@ function ListOfPills({ pillEditFunction }) {
             theme: "light"
         });
     }
-
-
     function deleteData(key) {
         const db = getDatabase();
         const currentUserEmail = firebaseClearString(localStorage.getItem('email'))
-        const itemRef = ref(db, 'pillsData/' + currentUserEmail + "/" + key);
+        const url = getPillsUrlForId(currentUserEmail, key)
+        const itemRef = ref(db, url);
         remove(itemRef).then(() => {
             successToast('Pill deleted successfully')
         }).catch((error) => {
             errorToast(error.message)
         });
     }
-
     function editItem(key) {
         pillEditFunction(key)
     }
-
-
     useEffect(() => {
-        const currentUserEmail = firebaseClearString(localStorage.getItem('email'))
-        const starCountRef = ref(database, 'pillsData/' + currentUserEmail);
-        onValue(starCountRef, (snapshot) => {
-            const data = snapshot.val();
-            setDataFromFirebase(null);
-            setDataFromFirebase(data);
-            setIsPageLoaded(true)
-            if (data == null || data.length == 0) {
-                setIsPageLoaded(false);
-                setEmptyScreenMessage("No data found for your account.🥺 ")
-                setEmptyScreenMessageIcon(animationData)
-            }
-        });
-    }, [])
+        setDataFromFirebase(null);
+        setDataFromFirebase(data);
+        setIsPageLoaded(true)
+        if (data == null || data.length == 0) {
+            setIsPageLoaded(false);
+            setEmptyScreenMessage("No data found for your account.🥺 ")
+            setEmptyScreenMessageIcon(animationData)
+        }
+    }, [data])
     return (<div className="no-scroll fade-in">
         <BarLoader
             width={"100%"}
@@ -96,7 +83,6 @@ function ListOfPills({ pillEditFunction }) {
             height={2}
             size={15}
         />
-
         <ToastContainer
             position="top-center"
             autoClose={5000}
@@ -122,22 +108,19 @@ function ListOfPills({ pillEditFunction }) {
                         </tr>
                     </thead>
                     <tbody id="scrollable" className="pills-table-body">
-
                         {dataFromFirebase && Object.keys(dataFromFirebase).map((key, index) => (
                             <><td colSpan="6" style={{ paddingTop: '30px' }} ></td>
                                 <tr key={key} className="pills-each-row cursor-pointer" >
                                     <td> <div className="table-heading" onClick={() => toggleReadMore(index)}>{dataFromFirebase[key].pillName}</div></td>
                                     <td><div className="table-heading" onClick={() => toggleReadMore(index)}>{dataFromFirebase[key].date}</div></td>
-                                    <td><div className="table-heading" onClick={() => toggleReadMore(index)}>{dataFromFirebase[key].time}</div></td>
+                                    <td><div className="table-heading" onClick={() => toggleReadMore(index)}>{convertTo12HourFormat(dataFromFirebase[key].time)}</div></td>
                                     <td><div className="table-heading" onClick={() => toggleReadMore(index)}>{dataFromFirebase[key].afterOrBefore}</div></td>
                                     <td><div className="table-heading" onClick={() => toggleReadMore(index)}>{dataFromFirebase[key].usedPills + " / " + dataFromFirebase[key].count}</div></td>
                                     <td>
                                         <div className="action-button">
                                             <div color="error" className="edit-action-button" onClick={(e) => editItem(key)}><EditIcon /></div>
-
                                             <div color="error" className="delete-action-button" onClick={(e) => deleteData(key)}><DeleteIcon /></div>
                                         </div>
-
                                     </td>
                                 </tr>
                                 <tr onClick={() => toggleReadMore(index)}>
@@ -153,7 +136,6 @@ function ListOfPills({ pillEditFunction }) {
                                                             <th className="table-heading pill-th">Reminder Repert</th>
                                                         </tr>
                                                     </thead>
-
                                                     <tbody className="pills-table-body">
                                                         <tr className="pills-each-row cursor-pointer info-body" >
                                                             <td><div className="table-heading bottom-margin">{dataFromFirebase[key].pillDiscription}</div></td>
@@ -163,15 +145,11 @@ function ListOfPills({ pillEditFunction }) {
                                                         </tr>
                                                     </tbody>
                                                 </table>
-
                                             </div>
                                         </div>
-
-
                                     </td>
                                 </tr>
                             </>
-
                         ))}
                     </tbody>
                 </table>
@@ -179,5 +157,4 @@ function ListOfPills({ pillEditFunction }) {
         }
     </div>)
 }
-
 export default ListOfPills;

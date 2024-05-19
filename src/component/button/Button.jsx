@@ -1,8 +1,6 @@
 import "./Button.css"
 function Button({ title, onClick , isLoading}) {
-
     return (<>
-
         <button className="button-with-spinner" onClick={onClick} disabled={isLoading}>
             {isLoading ? (
                 <div className="spinner-container">
@@ -15,8 +13,5 @@ function Button({ title, onClick , isLoading}) {
             )}
         </button>
     </>)
-
-
 }
-
 export default Button;

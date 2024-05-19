@@ -1,7 +1,5 @@
 import "./Empty.css"
 import Lottie from 'react-lottie';
-
-
 function Empty({ message, animationData }) {
     const defaultOptions = {
         loop: true,
@@ -20,6 +18,4 @@ function Empty({ message, animationData }) {
         <p className="empty-text">{message}</p>
     </div>)
 }
-
-
 export default Empty

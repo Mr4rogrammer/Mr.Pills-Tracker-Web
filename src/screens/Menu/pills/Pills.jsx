@@ -7,10 +7,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getDatabase, push, ref, onValue, set } from "firebase/database";
 import { database } from "../../../config/firebase";
-import { firebaseClearString } from "../Utils";
+import { firebaseClearString } from "../../Utils";
 import { useEffect } from "react";
 import BarLoader from "react-spinners/BarLoader";
-
+import { getPillsUrlForId } from "../../../config/firebaseUrlBuilder";
+import { getPillsPostUrl } from "../../../config/firebaseUrlBuilder";
 
 function Pills({ editKey, isEditable, moveToPillList }) {
     const [pillName, setPillName] = useState('');
@@ -30,31 +31,31 @@ function Pills({ editKey, isEditable, moveToPillList }) {
         if (pillName === undefined || pillName.trim().length === 0) {
             return true;
         }
-        
+
         if (pillDiscription === undefined || pillDiscription.trim().length === 0) {
             return true;
         }
-        
+
         if (date === undefined || date.trim().length === 0) {
             return true;
         }
-        
+
         if (time === undefined || time.trim().length === 0) {
             return true;
         }
-        
+
         if (noOfDay === undefined || noOfDay.trim().length === 0) {
             return true;
         }
-        
+
         if (notification === undefined || notification.trim().length === 0) {
             return true;
         }
-        
+
         if (count === undefined || count.trim().length === 0) {
             return true;
         }
-        
+
         if (afterOrBefore === undefined || afterOrBefore.trim().length === 0) {
             return true;
         }
@@ -71,24 +72,27 @@ function Pills({ editKey, isEditable, moveToPillList }) {
     }, []);
 
     useEffect(() => {
-        const currentUserEmail = firebaseClearString(localStorage.getItem('email'))
-        const starCountRef = ref(database, 'pillsData/' + currentUserEmail + "/" + editKey);
-        onValue(starCountRef, (snapshot) => {
-            const data = snapshot.val();
-            if (data != null) {
-                setPillName(data.pillName);
-                setPillDiscription(data.pillDiscription);
-                setDate(data.date);
-                setTime(data.time);
-                setNoOfDays(data.noOfDay);
-                setNotification(data.notification);
-                setCount(data.count);
-                setIsChecked(data.everyFiveReminder);
-                setAfterOrBefore(data.afterOrBefore);
-                setUsedPills(data.usedPills);
-            }
-        });
-    }, [])
+        if (editKey !== undefined || editKey !== null) {
+            const currentUserEmail = firebaseClearString(localStorage.getItem('email'))
+            const url = getPillsUrlForId(currentUserEmail, editKey)
+            const starCountRef = ref(database, url);
+            onValue(starCountRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data != null) {
+                    setPillName(data.pillName);
+                    setPillDiscription(data.pillDiscription);
+                    setDate(data.date);
+                    setTime(data.time);
+                    setNoOfDays(data.noOfDay);
+                    setNotification(data.notification);
+                    setCount(data.count);
+                    setIsChecked(data.everyFiveReminder);
+                    setAfterOrBefore(data.afterOrBefore);
+                    setUsedPills(data.usedPills);
+                }
+            });
+        }
+    }, [editKey])
 
 
     const resetFormData = () => {
@@ -104,7 +108,6 @@ function Pills({ editKey, isEditable, moveToPillList }) {
     };
 
     function writeAllDataToDatabase() {
-        const variables = [pillName, pillDiscription, date, time, noOfDay, notification, count, afterOrBefore];
         const databaseObject = {
             pillName: pillName,
             pillDiscription: pillDiscription,
@@ -115,13 +118,14 @@ function Pills({ editKey, isEditable, moveToPillList }) {
             count: count,
             everyFiveReminder: isChecked,
             afterOrBefore: afterOrBefore,
-            usedPills:(isEditable)? usedPills:"0"
+            usedPills: (isEditable) ? usedPills : "0"
         }
         const db = getDatabase();
         const currentUserEmail = firebaseClearString(localStorage.getItem('email'))
 
         if (isEditable) {
-            set(ref(db, 'pillsData/' + currentUserEmail + "/" + editKey), databaseObject)
+            const url = getPillsUrlForId(currentUserEmail, editKey)
+            set(ref(db, url), databaseObject)
                 .then(() => {
                     successToast('Pill Updated successfully')
                     resetFormData();
@@ -134,7 +138,8 @@ function Pills({ editKey, isEditable, moveToPillList }) {
                     errorToast(error.message)
                 });
         } else {
-            push(ref(db, 'pillsData/' + currentUserEmail), databaseObject).then(() => {
+            const url = getPillsPostUrl(currentUserEmail)
+            push(ref(db, url), databaseObject).then(() => {
                 successToast('Pill added successfully')
                 resetFormData();
                 setButtonIsLoading(false);
@@ -173,7 +178,7 @@ function Pills({ editKey, isEditable, moveToPillList }) {
         });
     }
 
-    
+
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
     };
@@ -210,6 +215,21 @@ function Pills({ editKey, isEditable, moveToPillList }) {
         setAfterOrBefore(value);
     };
 
+    const getCurrentDate = () => {
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+
+const isPastDate = (givenDate) => {
+    const currentDate = getCurrentDate();
+    return givenDate <= currentDate;
+}
+
+
     const handleButtonClick = (event) => {
         setButtonIsLoading(true)
         const state = areAllEmpty()
@@ -220,15 +240,19 @@ function Pills({ editKey, isEditable, moveToPillList }) {
         } else {
             const numberOdDays = parseInt(noOfDay);
             const pillsCount = parseInt(count);
-    
-            if (pillsCount < numberOdDays) {
+
+            if(isPastDate(date)) {
+                errorToast("Date should be greater than current date. 🤭");
+                setButtonIsLoading(false);
+                return;
+            }else if (pillsCount < numberOdDays) {
                 errorToast("Pills count should be greater than or equal to number of days. 🤭");
                 setButtonIsLoading(false);
                 return;
             } else {
                 writeAllDataToDatabase()
             }
-        
+
         }
     };
 

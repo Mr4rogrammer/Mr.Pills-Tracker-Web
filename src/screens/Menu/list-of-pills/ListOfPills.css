@@ -1,163 +1,165 @@
 .fade-in {
-    animation: fade-in 3s;
+  animation: fade-in 3s;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
   }
-  
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 100;
-    }
+
+  to {
+    opacity: 100;
   }
+}
 
 
 
 
 .table-heading {
-    font-size: 12px;
-    padding-left: 2px;
-    color: black;
-    font-family: "Nunito";
-    text-align: left;
-    table-layout:fixed;
+  font-size: 12px;
+  padding-left: 2px;
+  color: black;
+  font-family: "Nunito";
+  text-align: left;
+  table-layout: fixed;
 }
 
 .table-container {
-    max-height: 100vh;
-    overflow-y: auto;
+  max-height: 100vh;
+  overflow-y: auto;
 }
 
 .table-pills-data {
-    margin-top: 10%;
+  margin-top: 10%;
 }
 
 .pill-table {
-    width: 100%;
-    table-layout: fixed;
+  width: 100%;
+  table-layout: fixed;
 }
 
 thead {
-    /* Fix the thead at the top */
-    position: sticky;
-    top: 0;
-    table-layout:fixed;
-    width: calc( 100% - 1em )
-   
+  /* Fix the thead at the top */
+  position: sticky;
+  top: 0;
+  table-layout: fixed;
+  width: calc(100% - 1em)
     /* Optional: Adjust the background color of the thead */
 }
 
 .pill-th {
-    width: calc(100% / 5.6  );
-    text-align: left;
-    padding-bottom: 15px;
-    border-bottom: 0.1px solid rgba(183, 183, 183, 0.496);
+  width: calc(100% / 5.6);
+  text-align: left;
+  padding-bottom: 15px;
+  border-bottom: 0.1px solid rgba(183, 183, 183, 0.496);
 }
 
 
 
 .pills-each-row:hover td {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .table-container::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .pills-menu-option {
-    background-color: red;
+  background-color: red;
 }
 
 .pill-list-barloader {
-    background-color: red;
-    width: 100%;
+  background-color: red;
+  width: 100%;
 }
 
 .no-scroll {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .pills-table-body {
-    width: 100%;
-    overflow:auto;
+  width: 100%;
+  overflow: auto;
 }
 
 
 .menu-item-div {
-    width: 100%;
-    height: 100%;
-    background-color: red;
+  width: 100%;
+  height: 100%;
+  background-color: red;
 }
 
 
 .action-button {
-    width: 100%;
-    justify-content: space-between;
-    align-items:  space-between;
-    display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: space-between;
+  display: flex;
 }
 
 .edit-action-button:hover {
-    color: green;
-    cursor: pointer;
+  color: green;
+  cursor: pointer;
 }
 
 .delete-action-button:hover {
-    color: red;
-    cursor: pointer;
+  color: red;
+  cursor: pointer;
 }
 
-th, td {
-    padding-left: 5px;
-    padding-right: 5px;
-    overflow-wrap: break-word;
-  }
+th,
+td {
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-wrap: break-word;
+}
 
 
 .pills-table-row {
-    background-color: white;
+  background-color: white;
 }
 
 
 
 .truncate {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2; /* Number of lines to show */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
-  }
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  /* Number of lines to show */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
 
-  .cursor-pointer:hover {
-    cursor: pointer;
-  }
+.cursor-pointer:hover {
+  cursor: pointer;
+}
 
-  .hidden {
-    display: none;
-  }
+.hidden {
+  display: none;
+}
 
-  .visible {
-    display: block;
-    
-  }
+.visible {
+  display: block;
 
-
-  .pills-extra-info {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
-  }
+}
 
 
-  .info-row {
-    padding: 15px;
-    border-radius: 5px;
-     background-color:rgba(246, 246, 246, 0.847);
-  }
+.pills-extra-info {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
 
 
-  .bottom-margin {
-    margin-top: 10px;
-  }
+.info-row {
+  padding: 15px;
+  border-radius: 5px;
+  background-color: rgba(246, 246, 246, 0.847);
+}
+
+
+.bottom-margin {
+  margin-top: 10px;
+}

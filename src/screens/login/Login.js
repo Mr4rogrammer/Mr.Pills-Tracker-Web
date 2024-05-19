@@ -6,35 +6,29 @@ import { useEffect, useState } from 'react';
 import Base from '../base/Base';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 function App() {
-
   function infoToast(message) {
     toast.info(message, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light"
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light"
     });
-}
-
+  }
   const [email, setEmail] = useState('');
-
   useEffect(() => {
     setEmail(localStorage.getItem('email'))
   })
-
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "scroll"
     };
   }, []);
-
   const handleGoogleAuth = () => {
     signInWithPopup(auth, googleAuthProvider)
       .then((result) => {
@@ -49,22 +43,20 @@ function App() {
         infoToast(error.message)
       });
   }
-
   return (
-
     <center>
-       <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-        />
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       {email ? <Base /> :
         <div className="Login">
           <div className="content-wrapper">
@@ -96,5 +88,4 @@ function App() {
     </center>
   );
 }
-
 export default App;

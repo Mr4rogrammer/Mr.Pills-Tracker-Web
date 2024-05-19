@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./Spinner.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown } from '@fortawesome/fontawesome-free-solid'
-
 function Spinner({ selected, setSelected ,options, defaultText, onKeySelected,}) {
     const [isActive, setIsActive] = useState(false)
     return (
@@ -12,7 +11,6 @@ function Spinner({ selected, setSelected ,options, defaultText, onKeySelected,})
             <FontAwesomeIcon icon={faCaretDown} />
             </div>
             </div>
-
             {isActive && (
                 <div className="dropdown-content">
                     {
@@ -31,12 +29,9 @@ function Spinner({ selected, setSelected ,options, defaultText, onKeySelected,})
                             )
                         })
                     }
-
                 </div>
             )}
         </div>
     )
-
 }
-
 export default Spinner;
