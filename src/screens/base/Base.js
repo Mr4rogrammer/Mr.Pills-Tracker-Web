@@ -4,7 +4,7 @@ import { useState } from 'react';
 import "./Base.css"
 import DashBoard from "../dashboard/DashBoard";
 import Menu from "../Menu/Menu";
-import Setting from "../setting/Setting";
+import Setting from "../settings/Setting";
 function Base() {
     const [selctedIndex, setSelectedIndex] = useState(0);
 

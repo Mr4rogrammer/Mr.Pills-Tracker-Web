@@ -48,15 +48,15 @@ thead {
 }
 
 .pill-th {
-    width: calc(100% / 6.5);
-    /* Set the width of each th to be 20% of the table width (5 columns) */
+    width: calc(100% / 5.6  );
     text-align: left;
     padding-bottom: 15px;
     border-bottom: 0.1px solid rgba(183, 183, 183, 0.496);
 }
 
+
+
 .pills-each-row:hover td {
-    font-size: 20px;
     font-weight: bold;
 }
 
@@ -111,4 +111,53 @@ th, td {
     padding-left: 5px;
     padding-right: 5px;
     overflow-wrap: break-word;
+  }
+
+
+.pills-table-row {
+    background-color: white;
+}
+
+
+
+.truncate {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Number of lines to show */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
+
+  .cursor-pointer:hover {
+    cursor: pointer;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .visible {
+    display: block;
+    
+  }
+
+
+  .pills-extra-info {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+
+  .info-row {
+    padding: 15px;
+    border-radius: 5px;
+     background-color:rgba(232, 231, 231, 0.58);
+  }
+
+
+  .bottom-margin {
+    margin-top: 10px;
   }

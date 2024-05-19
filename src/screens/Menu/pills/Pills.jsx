@@ -280,7 +280,7 @@ function Pills({ editKey, isEditable, moveToPillList }) {
                 <div>
                     <InputBox value={date} onChange={setDateToVariable} title={"Starting Date"} placeholder={"12/12/2020"} inputType={"date"} />
                     <InputBox value={noOfDay} onChange={setNoOfDaysToVariable} title={"Number of Days"} placeholder={"1"} inputType={"number"} />
-                    <InputBox value={time} onChange={setTimeToVariable} title={"Starting Date"} placeholder={"08:15:PM"} inputType={"time"} />
+                    <InputBox value={time} onChange={setTimeToVariable} title={"Time"} placeholder={"08:15:PM"} inputType={"time"} />
                     <InputBox value={count} onChange={setCountToVariable} title={"Pill’s Counts"} placeholder={"20"} inputType={"number"} />
                     <InputBox value={notification} onChange={setNotificationToVariable} title={"Notification Message"} placeholder={"Dad time to take tablet"} inputType={"text"} />
                 </div>

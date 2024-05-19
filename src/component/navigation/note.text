@@ -1,0 +1,4 @@
+
+ <div className={"image-menu-wrapper menu-bottom-margin "+(selctedIndex == 2 ? "selected" : "") }onClick={() => handleClick(2)}>
+                        <img className="nav-image" src={require('../../images/settings.svg').default} />
+                    </div>

@@ -34,10 +34,7 @@ function NavigationBar({ onItemClick }) {
                         <img className="nav-image" src={require('../../images/menu.svg').default} />
                     </div>
 
-                    <div className={"image-menu-wrapper menu-bottom-margin "+(selctedIndex == 2 ? "selected" : "") }onClick={() => handleClick(2)}>
-                        <img className="nav-image" src={require('../../images/settings.svg').default} />
-                    </div>
-
+                   
 
                     <div className="image-menu-wrapper ">
                         <img className="nav-image" src={require('../../images/logout.svg').default} onClick={() => handleClick(-1)} />

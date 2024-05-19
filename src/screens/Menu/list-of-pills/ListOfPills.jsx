@@ -20,7 +20,15 @@ function ListOfPills({ pillEditFunction }) {
     const [isPageLoaded, setIsPageLoaded] = useState(false)
     const [emptyScreenMessage, setEmptyScreenMessage] = useState("No data found for your account.🥺 ")
     const [emptyScreenMessageIcon, setEmptyScreenMessageIcon] = useState(animationData)
+    const [expandedItems, setExpandedItems] = useState({});
 
+
+    const toggleReadMore = (index) => {
+        setExpandedItems((prev) => ({
+            ...prev,
+            [index]: !prev[index],
+        }));
+    };
 
     function errorToast(message) {
         toast.warn(message, {
@@ -73,7 +81,7 @@ function ListOfPills({ pillEditFunction }) {
             setDataFromFirebase(null);
             setDataFromFirebase(data);
             setIsPageLoaded(true)
-            if(data == null || data.length == 0) {
+            if (data == null || data.length == 0) {
                 setIsPageLoaded(false);
                 setEmptyScreenMessage("No data found for your account.🥺 ")
                 setEmptyScreenMessageIcon(animationData)
@@ -105,9 +113,8 @@ function ListOfPills({ pillEditFunction }) {
             isPageLoaded ? <div className="table-container">
                 <table className="pill-table ">
                     <thead>
-                        <tr>
+                        <tr className="pills-table-row">
                             <th className="table-heading pill-th">Pill Name</th>
-                            <th className="table-heading pill-th">Pill Discription</th>
                             <th className="table-heading pill-th">Date</th>
                             <th className="table-heading pill-th">Timing</th>
                             <th className="table-heading pill-th">Before or After</th>
@@ -116,15 +123,14 @@ function ListOfPills({ pillEditFunction }) {
                     </thead>
                     <tbody id="scrollable" className="pills-table-body">
 
-                        {dataFromFirebase && Object.keys(dataFromFirebase).map((key) => (
-                            <><td colSpan="6" style={{ paddingTop: '30px' }}></td>
-                                <tr key={key} className="pills-each-row" >
-                                <td> <div className="table-heading">{dataFromFirebase[key].pillName}</div></td>
-                                <td> <div className="table-heading">{dataFromFirebase[key].pillDiscription}</div></td>
+                        {dataFromFirebase && Object.keys(dataFromFirebase).map((key, index) => (
+                            <><td colSpan="6" style={{ paddingTop: '30px' }} ></td>
+                                <tr key={key} className="pills-each-row cursor-pointer" onClick={() => toggleReadMore(index)}>
+                                    <td> <div className="table-heading">{dataFromFirebase[key].pillName}</div></td>
                                     <td><div className="table-heading">{dataFromFirebase[key].date}</div></td>
                                     <td><div className="table-heading">{dataFromFirebase[key].time}</div></td>
                                     <td><div className="table-heading">{dataFromFirebase[key].afterOrBefore}</div></td>
-                                    <td><div className="table-heading">{dataFromFirebase[key].usedPills+" / "+dataFromFirebase[key].count}</div></td>
+                                    <td><div className="table-heading">{dataFromFirebase[key].usedPills + " / " + dataFromFirebase[key].count}</div></td>
                                     <td>
                                         <div className="action-button">
                                             <div color="error" className="edit-action-button" onClick={(e) => editItem(key)}><EditIcon /></div>
@@ -134,13 +140,42 @@ function ListOfPills({ pillEditFunction }) {
 
                                     </td>
                                 </tr>
+                                <tr onClick={() => toggleReadMore(index)}>
+                                    <td colSpan="6" >
+                                        <div className={`pills-extra-info info-row ${expandedItems[index] ? 'visible fade-in' : 'hidden'}`}>
+                                            <div className={`table-heading cursor-pointer`} >
+                                                <table  className="pill-table ">
+                                                    <thead>
+                                                        <tr className="margin-bottom">
+                                                            <th className="table-heading pill-th">Discription</th>
+                                                            <th className="table-heading pill-th">Notification</th>
+                                                            <th className="table-heading pill-th">Total Day's </th>
+                                                            <th className="table-heading pill-th">Reminder Repert</th>
+                                                        </tr>
+                                                    </thead>
 
+                                                    <tbody className="pills-table-body">
+                                                        <tr className="pills-each-row cursor-pointer info-body" >
+                                                            <td><div className="table-heading bottom-margin">{dataFromFirebase[key].pillDiscription}</div></td>
+                                                            <td><div className="table-heading bottom-margin">{dataFromFirebase[key].notification}</div></td>
+                                                            <td><div className="table-heading bottom-margin">{dataFromFirebase[key].noOfDay}</div></td>
+                                                            <td><div className="table-heading bottom-margin">{dataFromFirebase[key].everyFiveReminder?"Yes":"No"}</div></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+
+
+                                    </td>
+                                </tr>
                             </>
 
                         ))}
                     </tbody>
                 </table>
-            </div> : <Empty message={emptyScreenMessage} animationData={emptyScreenMessageIcon}/>
+            </div> : <Empty message={emptyScreenMessage} animationData={emptyScreenMessageIcon} />
         }
     </div>)
 }
