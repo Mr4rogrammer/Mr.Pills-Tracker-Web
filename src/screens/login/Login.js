@@ -39,14 +39,14 @@ function App() {
     signInWithPopup(auth, googleAuthProvider)
       .then((result) => {
         const user = result.user;
-        console.log(user);
         setEmail(user.email);
         localStorage.setItem('email', user.email)
         localStorage.setItem('name', user.displayName)
         localStorage.setItem('image', user.photoURL)
       })
       .catch((error) => {
-        infoToast("Something went wrong, please try again 🥲")
+        console.log(error)
+        infoToast(error.message)
       });
   }
 

@@ -29,8 +29,8 @@
 }
 
 .image-menu-wrapper:hover {
-    background-color: rgb(237, 237, 237);
-    border-radius: 10%;
+    background-color: #DFEEDB;
+    border-radius: 20%;
     cursor: pointer;
 }
 
@@ -51,6 +51,6 @@
 
 
 .selected {
-    background-color: rgb(195, 195, 195);
+    background-color: #A6D997;
     border-radius: 20%;
 }

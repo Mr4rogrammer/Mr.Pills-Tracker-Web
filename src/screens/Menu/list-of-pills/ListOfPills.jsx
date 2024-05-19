@@ -125,12 +125,12 @@ function ListOfPills({ pillEditFunction }) {
 
                         {dataFromFirebase && Object.keys(dataFromFirebase).map((key, index) => (
                             <><td colSpan="6" style={{ paddingTop: '30px' }} ></td>
-                                <tr key={key} className="pills-each-row cursor-pointer" onClick={() => toggleReadMore(index)}>
-                                    <td> <div className="table-heading">{dataFromFirebase[key].pillName}</div></td>
-                                    <td><div className="table-heading">{dataFromFirebase[key].date}</div></td>
-                                    <td><div className="table-heading">{dataFromFirebase[key].time}</div></td>
-                                    <td><div className="table-heading">{dataFromFirebase[key].afterOrBefore}</div></td>
-                                    <td><div className="table-heading">{dataFromFirebase[key].usedPills + " / " + dataFromFirebase[key].count}</div></td>
+                                <tr key={key} className="pills-each-row cursor-pointer" >
+                                    <td> <div className="table-heading" onClick={() => toggleReadMore(index)}>{dataFromFirebase[key].pillName}</div></td>
+                                    <td><div className="table-heading" onClick={() => toggleReadMore(index)}>{dataFromFirebase[key].date}</div></td>
+                                    <td><div className="table-heading" onClick={() => toggleReadMore(index)}>{dataFromFirebase[key].time}</div></td>
+                                    <td><div className="table-heading" onClick={() => toggleReadMore(index)}>{dataFromFirebase[key].afterOrBefore}</div></td>
+                                    <td><div className="table-heading" onClick={() => toggleReadMore(index)}>{dataFromFirebase[key].usedPills + " / " + dataFromFirebase[key].count}</div></td>
                                     <td>
                                         <div className="action-button">
                                             <div color="error" className="edit-action-button" onClick={(e) => editItem(key)}><EditIcon /></div>
@@ -144,7 +144,7 @@ function ListOfPills({ pillEditFunction }) {
                                     <td colSpan="6" >
                                         <div className={`pills-extra-info info-row ${expandedItems[index] ? 'visible fade-in' : 'hidden'}`}>
                                             <div className={`table-heading cursor-pointer`} >
-                                                <table  className="pill-table ">
+                                                <table className="pill-table ">
                                                     <thead>
                                                         <tr className="margin-bottom">
                                                             <th className="table-heading pill-th">Discription</th>
@@ -159,7 +159,7 @@ function ListOfPills({ pillEditFunction }) {
                                                             <td><div className="table-heading bottom-margin">{dataFromFirebase[key].pillDiscription}</div></td>
                                                             <td><div className="table-heading bottom-margin">{dataFromFirebase[key].notification}</div></td>
                                                             <td><div className="table-heading bottom-margin">{dataFromFirebase[key].noOfDay}</div></td>
-                                                            <td><div className="table-heading bottom-margin">{dataFromFirebase[key].everyFiveReminder?"Yes":"No"}</div></td>
+                                                            <td><div className="table-heading bottom-margin">{dataFromFirebase[key].everyFiveReminder ? "Yes" : "No"}</div></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

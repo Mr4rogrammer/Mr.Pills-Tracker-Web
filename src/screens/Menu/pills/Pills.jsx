@@ -105,7 +105,6 @@ function Pills({ editKey, isEditable, moveToPillList }) {
 
     function writeAllDataToDatabase() {
         const variables = [pillName, pillDiscription, date, time, noOfDay, notification, count, afterOrBefore];
-        console.log(variables);
         const databaseObject = {
             pillName: pillName,
             pillDiscription: pillDiscription,
@@ -118,7 +117,6 @@ function Pills({ editKey, isEditable, moveToPillList }) {
             afterOrBefore: afterOrBefore,
             usedPills:(isEditable)? usedPills:"0"
         }
-        console.log(variables)
         const db = getDatabase();
         const currentUserEmail = firebaseClearString(localStorage.getItem('email'))
 
@@ -175,6 +173,7 @@ function Pills({ editKey, isEditable, moveToPillList }) {
         });
     }
 
+    
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
     };
@@ -214,7 +213,6 @@ function Pills({ editKey, isEditable, moveToPillList }) {
     const handleButtonClick = (event) => {
         setButtonIsLoading(true)
         const state = areAllEmpty()
-        console.log(state)
         if (state) {
             errorToast("Please fill all the input fields. 😩");
             setButtonIsLoading(false);

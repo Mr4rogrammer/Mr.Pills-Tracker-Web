@@ -14,7 +14,7 @@ function Menu() {
     const [isEditable, setIsEditable] = useState(false)
     function moveToPillEdit(key,) {
         setSelectedKey(0)
-        setSelected("Add a pill")
+        setSelected("Update a pill")
         setEditKey(key)
         setIsEditable(true)
     }
