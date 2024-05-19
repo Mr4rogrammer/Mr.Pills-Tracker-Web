@@ -11,7 +11,7 @@ import "react-circular-progressbar/dist/styles.css";
 import { convertTo12HourFormat } from "../Utils";
 import { FirebaseContext } from "../../FirebaseContext";
 function DashBoard() {
-    const data = useContext(FirebaseContext);
+    const { data } = useContext(FirebaseContext);
     const [dataFromFirebase, setDataFromFirebase, dataRef] = useState(null);
     const [isPageLoaded, setIsPageLoaded] = useState(false);
     const [emptyScreenMessage, setEmptyScreenMessage] = useState(

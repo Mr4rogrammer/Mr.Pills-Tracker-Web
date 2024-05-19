@@ -15,7 +15,7 @@ import { getPillsUrlForId } from "../../../config/firebaseUrlBuilder";
 import { convertTo12HourFormat } from "../../Utils";
 import { FirebaseContext } from "../../../FirebaseContext";
 function ListOfPills({ pillEditFunction }) {
-    const data = useContext(FirebaseContext);
+    const { data } = useContext(FirebaseContext);
     const [dataFromFirebase, setDataFromFirebase] = useState(null);
     const [isPageLoaded, setIsPageLoaded] = useState(false)
     const [emptyScreenMessage, setEmptyScreenMessage] = useState("No data found for your account.🥺 ")
@@ -67,6 +67,7 @@ function ListOfPills({ pillEditFunction }) {
     }
     useEffect(() => {
         const safeData = data || {};
+        console.log(data)
         setDataFromFirebase(null);
         setDataFromFirebase(safeData);
         setIsPageLoaded(true)

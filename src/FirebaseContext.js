@@ -7,6 +7,11 @@ const FirebaseProvider = ({ children }) => {
     const currentUserEmail = firebaseClearString(localStorage.getItem('email'))
     const url = getPillsUrl(currentUserEmail)
     const [data, setData] = useState(null);
+
+    const contextValue = {
+        data,
+      };
+    
     useEffect(() => {
         const database = getDatabase();
         const dataRef = ref(database,url);
@@ -16,7 +21,7 @@ const FirebaseProvider = ({ children }) => {
         });
     }, []);
     return (
-        <FirebaseContext.Provider value={data}>
+        <FirebaseContext.Provider value={contextValue}>
             {children}
         </FirebaseContext.Provider>
     );
