@@ -66,10 +66,11 @@ function ListOfPills({ pillEditFunction }) {
         pillEditFunction(key)
     }
     useEffect(() => {
+        const safeData = data || {};
         setDataFromFirebase(null);
-        setDataFromFirebase(data);
+        setDataFromFirebase(safeData);
         setIsPageLoaded(true)
-        if (data == null || data.length == 0) {
+        if (safeData == null || safeData.length == 0) {
             setIsPageLoaded(false);
             setEmptyScreenMessage("No data found for your account.🥺 ")
             setEmptyScreenMessageIcon(animationData)
@@ -100,7 +101,7 @@ function ListOfPills({ pillEditFunction }) {
                 <table className="pill-table ">
                     <thead>
                         <tr className="pills-table-row">
-                            <th className="table-heading pill-th">Pill Name</th>
+                            <th className="table-heading pill-th">Medicine Name</th>
                             <th className="table-heading pill-th">Date</th>
                             <th className="table-heading pill-th">Timing</th>
                             <th className="table-heading pill-th">Before or After</th>

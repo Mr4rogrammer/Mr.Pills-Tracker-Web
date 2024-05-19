@@ -62,10 +62,11 @@ function Pills({ editKey, isEditable, moveToPillList }) {
         return () => clearTimeout(timer);
     }, []);
     useEffect(() => {
-        if (editKey !== undefined || editKey !== null) {
-            Object.keys(data).map((key, index) => {
+        if (editKey !== undefined && editKey !== null && editKey !== "") {
+            const safeData = data || {};
+            Object.keys(safeData).map((key, index) => {
                 if(key === editKey) {
-                    const localData = data[key];
+                    const localData = safeData[key];
                     setPillName(localData.pillName);
                     setPillDiscription(localData.pillDiscription);
                     setDate(localData.date);
@@ -79,7 +80,7 @@ function Pills({ editKey, isEditable, moveToPillList }) {
                 }
             });
         }
-    }, [data, editKey])
+    }, [editKey])
     const resetFormData = () => {
         setPillName('');
         setPillDiscription('');
@@ -239,12 +240,12 @@ function Pills({ editKey, isEditable, moveToPillList }) {
                 pauseOnHover
                 theme="light"
             />
-            <p className="new-pill">New Pill 💚</p>
+            <p className="new-pill">New Medicine 💚</p>
             <div className="pills-grid-container">
                 <div>
-                    <InputBox value={pillName} onChange={setPillNameToVariable} title={"Pill Name"} placeholder={"Aspirin"} inputType={"text"} />
-                    <TextArea value={pillDiscription} onChange={setPillDiscriptionToVariable} title={"Pill discription"} placeholder={"Good for fever"} inputType={"text"} />
-                    <p className="pills-input-title ">Take a pill after or before food ?</p>
+                    <InputBox value={pillName} onChange={setPillNameToVariable} title={"Medicine Name"} placeholder={"Aspirin"} inputType={"text"} />
+                    <TextArea value={pillDiscription} onChange={setPillDiscriptionToVariable} title={"Medicine discription"} placeholder={"Good for fever"} inputType={"text"} />
+                    <p className="pills-input-title ">Take a Medicine after or before food ?</p>
                     <div className="reminder-wrapper">
                         <input type="radio" className="pills-radio-box" checked={afterOrBefore === "BEFORE"} onChange={() => handleRadioChange("BEFORE")} />
                         <p className="pills-radio-title">Before</p>
@@ -263,7 +264,7 @@ function Pills({ editKey, isEditable, moveToPillList }) {
                     <InputBox value={date} onChange={setDateToVariable} title={"Starting Date"} placeholder={"12/12/2020"} inputType={"date"} />
                     <InputBox value={noOfDay} onChange={setNoOfDaysToVariable} title={"Number of Days"} placeholder={"1"} inputType={"number"} />
                     <InputBox value={time} onChange={setTimeToVariable} title={"Time"} placeholder={"08:15:PM"} inputType={"time"} />
-                    <InputBox value={count} onChange={setCountToVariable} title={"Pill’s Counts"} placeholder={"20"} inputType={"number"} />
+                    <InputBox value={count} onChange={setCountToVariable} title={"Medicine’s Counts"} placeholder={"20"} inputType={"number"} />
                     <InputBox value={notification} onChange={setNotificationToVariable} title={"Notification Message"} placeholder={"Dad time to take tablet"} inputType={"text"} />
                 </div>
             </div>

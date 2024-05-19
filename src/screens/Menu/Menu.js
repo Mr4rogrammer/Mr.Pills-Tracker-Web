@@ -5,19 +5,19 @@ import { useState } from "react";
 import Pills from "./pills/Pills";
 import ListOfPills from "./list-of-pills/ListOfPills";
 function Menu() {
-    const [selected, setSelected] = useState("Add a pill")
+    const [selected, setSelected] = useState("Add a Medicine")
     const [selectedKey, setSelectedKey] = useState(0)
     const [editKey, setEditKey] = useState('')
     const [isEditable, setIsEditable] = useState(false)
     function moveToPillEdit(key,) {
         setSelectedKey(0)
-        setSelected("Update a pill")
+        setSelected("Update a Medicine")
         setEditKey(key)
         setIsEditable(true)
     }
     function moveToPillList() {
         setSelectedKey(2)
-        setSelected("List of pill's")
+        setSelected("List of Medicine's")
     }
     function onKeySelected(key) {
         setIsEditable(false)

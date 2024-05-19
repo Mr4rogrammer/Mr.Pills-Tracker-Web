@@ -2,11 +2,11 @@
 const dropDowmModelOptions = [
     {
         key: 0,
-        value: "Add a pill",
+        value: "Add a Medicine",
     },
     {
         key: 2,
-        value: "List of pill's",
+        value: "List of Medicine's",
     },
 ];
 export const convertTo12HourFormat = (time24) => {

@@ -112,7 +112,7 @@ function DashBoard() {
                             <div>
                                 <div className="info-div">
                                     <p className="pills-count">{morningCountRef.current}</p>
-                                    <p className="pills-title">Morning Pills</p>
+                                    <p className="pills-title">Morning Medicine's</p>
                                 </div>
                             </div>
                         </div>
@@ -129,7 +129,7 @@ function DashBoard() {
                             <div>
                                 <div className="info-div">
                                     <p className="pills-count">{afternoonCountRef.current}</p>
-                                    <p className="pills-title">Afternoon Pills</p>
+                                    <p className="pills-title">Afternoon Medicine's</p>
                                 </div>
                             </div>
                         </div>
@@ -146,7 +146,7 @@ function DashBoard() {
                             <div>
                                 <div className="info-div">
                                     <p className="pills-count">{eveningCountRef.current}</p>
-                                    <p className="pills-title">Night Pills</p>
+                                    <p className="pills-title">Night Medicine's</p>
                                 </div>
                             </div>
                         </div>
@@ -195,10 +195,10 @@ function DashBoard() {
                                 </div>
                                 <div className="dashboard-text-grid-container">
                                     <div className="progress-grid-inner">
-                                        <p className="dashboard-progress-text">Skipped Pill’s</p>
+                                        <p className="dashboard-progress-text">Skipped Medicine's</p>
                                     </div>
                                     <div className="progress-grid-inner">
-                                        <p className="dashboard-progress-text">Total Pill’s</p>
+                                        <p className="dashboard-progress-text">Total Medicine's</p>
                                     </div>
                                 </div>
                             </center>
@@ -208,7 +208,7 @@ function DashBoard() {
                             style={{ maxHeight: "400px", overflowY: "hidden" }}
                         >
                             <p className="progress-title" style={{ marginBottom: "10px" }}>
-                                Upcoming Pills Plan
+                                Upcoming Medicine's Plan
                             </p>
                             <div style={{ marginBottom: "10px" }}>
                                 <table className="pill-table">
@@ -218,7 +218,7 @@ function DashBoard() {
                                                 className="table-heading pill-th-dashboard"
                                                 style={{ fontSize: "12px" }}
                                             >
-                                                Pill Name
+                                                Medicine Name
                                             </th>
                                             <th
                                                 className="table-heading pill-th-dashboard"
