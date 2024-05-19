@@ -12,7 +12,7 @@ const FirebaseProvider = ({ children }) => {
         const dataRef = ref(database,url);
         onValue(dataRef, (snapshot) => {
             const data = snapshot.val();
-            setData(data)
+            setData(data);
         });
     }, []);
     return (
