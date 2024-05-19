@@ -15,7 +15,7 @@ import { getPillsUrlForId } from "../../../config/firebaseUrlBuilder";
 import { convertTo12HourFormat } from "../../Utils";
 import { FirebaseContext } from "../../../FirebaseContext";
 function ListOfPills({ pillEditFunction }) {
-    const { data } = useContext(FirebaseContext);
+    const { pillsData } = useContext(FirebaseContext);
     const [dataFromFirebase, setDataFromFirebase] = useState(null);
     const [isPageLoaded, setIsPageLoaded] = useState(false)
     const [emptyScreenMessage, setEmptyScreenMessage] = useState("No data found for your account.🥺 ")
@@ -66,8 +66,7 @@ function ListOfPills({ pillEditFunction }) {
         pillEditFunction(key)
     }
     useEffect(() => {
-        const safeData = data || {};
-        console.log(data)
+        const safeData = pillsData || {};
         setDataFromFirebase(null);
         setDataFromFirebase(safeData);
         setIsPageLoaded(true)
@@ -76,7 +75,7 @@ function ListOfPills({ pillEditFunction }) {
             setEmptyScreenMessage("No data found for your account.🥺 ")
             setEmptyScreenMessageIcon(animationData)
         }
-    }, [data])
+    }, [pillsData])
     return (<div className="no-scroll fade-in">
         <BarLoader
             width={"100%"}

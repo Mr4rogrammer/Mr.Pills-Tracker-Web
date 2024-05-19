@@ -15,7 +15,7 @@ import { FirebaseContext } from "../../../FirebaseContext";
 
 
 function Pills({ editKey, isEditable, moveToPillList }) {
-    const data = useContext(FirebaseContext);
+    const { pillsData } = useContext(FirebaseContext);
     const [pillName, setPillName] = useState('');
     const [pillDiscription, setPillDiscription] = useState('');
     const [date, setDate] = useState('');
@@ -63,9 +63,9 @@ function Pills({ editKey, isEditable, moveToPillList }) {
     }, []);
     useEffect(() => {
         if (editKey !== undefined && editKey !== null && editKey !== "") {
-            const safeData = data || {};
+            const safeData = pillsData || {};
             Object.keys(safeData).map((key, index) => {
-                if(key === editKey) {
+                if (key === editKey) {
                     const localData = safeData[key];
                     setPillName(localData.pillName);
                     setPillDiscription(localData.pillDiscription);

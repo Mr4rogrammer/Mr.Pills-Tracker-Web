@@ -6,10 +6,10 @@ const FirebaseContext = createContext();
 const FirebaseProvider = ({ children }) => {
     const currentUserEmail = firebaseClearString(localStorage.getItem('email'))
     const url = getPillsUrl(currentUserEmail)
-    const [data, setData] = useState(null);
+    const [pillsData, setPillsData] = useState(null);
 
     const contextValue = {
-        data,
+        pillsData,
       };
     
     useEffect(() => {
@@ -17,7 +17,7 @@ const FirebaseProvider = ({ children }) => {
         const dataRef = ref(database,url);
         onValue(dataRef, (snapshot) => {
             const data = snapshot.val();
-            setData(data);
+            setPillsData(data);
         });
     }, []);
     return (
