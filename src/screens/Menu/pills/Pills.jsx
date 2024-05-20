@@ -247,8 +247,8 @@ function Pills({ editKey, isEditable, moveToPillList }) {
             <p className="new-pill">New Medicine 💚</p>
             <div className="pills-grid-container">
                 <div>
-                    <InputBox value={pillName} onChange={setPillNameToVariable} title={"Medicine Name"} placeholder={"Aspirin"} inputType={"text"} />
-                    <TextArea value={pillDiscription} onChange={setPillDiscriptionToVariable} title={"Medicine discription"} placeholder={"Good for fever"} inputType={"text"} />
+                    <InputBox value={pillName} onChange={setPillNameToVariable} title={"Medicine Name"} placeholder={"Paracetamol"} inputType={"text"} />
+                    <TextArea value={pillDiscription} onChange={setPillDiscriptionToVariable} title={"Medicine discription"} placeholder={"For treating fever, one of the commonly recommended medications is Paracetamol"} inputType={"text"} />
                     <p className="pills-input-title ">Take a Medicine after or before food ?</p>
                     <div className="reminder-wrapper">
                         <input type="radio" className="pills-radio-box" checked={afterOrBefore === "BEFORE"} onChange={() => handleRadioChange("BEFORE")} />
