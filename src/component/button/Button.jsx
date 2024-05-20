@@ -1,7 +1,7 @@
 import "./Button.css"
-function Button({ title, onClick , isLoading}) {
+function Button({ title, onClick , isLoading, width = "150px"}) {
     return (<>
-        <button className="button-with-spinner" onClick={onClick} disabled={isLoading}>
+        <button className="button-with-spinner" onClick={onClick} style={{ width:width}} disabled={isLoading}>
             {isLoading ? (
                 <div className="spinner-container">
                     <svg className="spinner" viewBox="0 0 50 50">

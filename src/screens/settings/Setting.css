@@ -30,8 +30,8 @@
 
 .settings-view-outer {
   border-radius: 10px;
-  padding-left: 20px;
-  margin-right: 7px;
+  padding-left: 10px;
+  margin-right: 10px;
   border: 1px solid #F2F2F2;
 }
 
@@ -74,4 +74,33 @@
   padding: 0;
   font-family: "Nunito";
   font-size: 10px;
+  padding-right: 10px;
+}
+
+.sample{
+ height: 100%;
+}
+
+.text-button {
+  font-family: "Nunito";
+  margin-right: 15px;
+  margin-top: 20px;
+  color: rgba(0, 0, 255, 0.64);
+  font-weight: bold;
+  text-align: end;
+}
+
+.text-button:hover {
+  cursor: pointer;
+  color: blue;
+}
+
+.sent_button_bottom {
+  bottom: 0;
+  
+}
+
+.text-button-right {
+  display: flex;
+  flex-direction: row;
 }

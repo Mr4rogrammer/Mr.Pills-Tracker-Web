@@ -74,3 +74,41 @@
 .show-cusors:hover {
   cursor: pointer;
 }
+
+.icon-div {
+  margin-bottom: 10px;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+
+.med-icon-dev {
+  display: flex;
+  width: 50px;
+  margin: 10px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+}
+
+.med-icon {
+  width: 100%;
+  border-radius: 50%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.med-icon:hover {
+  border: 3px solid #5570F1;
+  cursor: pointer;
+}
+
+.med-icon-name{
+  font-family: "Nunito";
+  font-size: 12px;
+  text-align: center;
+}
+
+.med-icon-selected {
+  border: 3px solid #5570F1;
+}

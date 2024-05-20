@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { getPillsUrl } from './config/firebaseUrlBuilder';
 import { firebaseClearString } from './screens/Utils';
-import { getDatabase, ref, onValue, remove } from "firebase/database";
+import { getDatabase, ref, onValue } from "firebase/database";
 const FirebaseContext = createContext();
 const FirebaseProvider = ({ children }) => {
     const currentUserEmail = firebaseClearString(localStorage.getItem('email'))

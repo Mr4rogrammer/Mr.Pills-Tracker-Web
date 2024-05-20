@@ -12,7 +12,7 @@ import BarLoader from "react-spinners/BarLoader";
 import { getPillsUrlForId } from "../../../config/firebaseUrlBuilder";
 import { getPillsPostUrl } from "../../../config/firebaseUrlBuilder";
 import { FirebaseContext } from "../../../FirebaseContext";
-
+import medicineIcon from "./menuUtils";
 
 function Pills({ editKey, isEditable, moveToPillList }) {
     const { pillsData } = useContext(FirebaseContext);
@@ -27,6 +27,8 @@ function Pills({ editKey, isEditable, moveToPillList }) {
     const [isChecked, setIsChecked] = useState(false);
     const [usedPills, setUsedPills] = useState("0");
     const [buttonIsLoading, setButtonIsLoading] = useState(false);
+    const [selectedicon, setSelectedIcon] = useState(0)
+
     const areAllEmpty = () => {
         if (pillName === undefined || pillName.trim().length === 0) {
             return true;
@@ -259,6 +261,25 @@ function Pills({ editKey, isEditable, moveToPillList }) {
                             onChange={handleCheckboxChange} />
                         <p className="pills-reminder-title" >Remind every 5 Minutes until they cancel</p>
                     </div>
+
+                    <div>
+                        <p className="input-title">Choose Icon</p>
+                        <div className="icon-div">
+                            {
+                                medicineIcon.map((icon, index) => {
+                                    return (
+                                        <div>
+                                            <div className="med-icon-dev " onClick={e => setSelectedIcon(icon.key)}>
+                                                <img className={"med-icon " + (selectedicon == index ? "med-icon-selected" : "")} src={icon.icon} />
+                                            </div>
+                                            <p className="med-icon-name">{icon.name}</p>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+
+                    </div>
                 </div>
                 <div>
                     <InputBox value={date} onChange={setDateToVariable} title={"Starting Date"} placeholder={"12/12/2020"} inputType={"date"} />
@@ -268,6 +289,7 @@ function Pills({ editKey, isEditable, moveToPillList }) {
                     <InputBox value={notification} onChange={setNotificationToVariable} title={"Notification Message"} placeholder={"Dad time to take tablet"} inputType={"text"} />
                 </div>
             </div>
+
             <Button title={isEditable ? "Update" : "Save"} onClick={handleButtonClick} isLoading={buttonIsLoading} />
         </div>
     </>)
