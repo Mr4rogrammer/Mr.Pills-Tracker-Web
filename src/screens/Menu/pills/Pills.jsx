@@ -79,6 +79,7 @@ function Pills({ editKey, isEditable, moveToPillList }) {
                     setIsChecked(localData.everyFiveReminder);
                     setAfterOrBefore(localData.afterOrBefore);
                     setUsedPills(localData.usedPills);
+                    setSelectedIcon(localData.selectedicon);
                 }
             });
         }
@@ -105,6 +106,7 @@ function Pills({ editKey, isEditable, moveToPillList }) {
             count: count,
             everyFiveReminder: isChecked,
             afterOrBefore: afterOrBefore,
+            selectedicon:selectedicon,
             usedPills: (isEditable) ? usedPills : "0"
         }
         const db = getDatabase();
