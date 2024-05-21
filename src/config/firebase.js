@@ -1,6 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getDatabase } from "firebase/database";
+import { getMessaging } from 'firebase/messaging';
+  
 const firebaseConfig = {
   apiKey: "AIzaSyD4i0rv3sTwDXwQuJjIfntQ9TXWB_wq7u4",
   authDomain: "mrpillstracker.firebaseapp.com",
@@ -14,4 +16,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
 const googleAuthProvider = new GoogleAuthProvider()
 const database = getDatabase(app)
-export { auth, googleAuthProvider, database }
+const messaging = getMessaging(app);
+
+export { auth, googleAuthProvider, database, messaging }

@@ -1,27 +1,101 @@
 import "./Setting.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMobileAlt } from '@fortawesome/fontawesome-free-solid'
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import TextArea from "../../component/inputbox/TextArea";
 import Button from "../../component/button/Button";
+import { getConfigsUrl } from "../../config/firebaseUrlBuilder";
+import { getDatabase, ref, set } from "firebase/database";
+import { ToastContainer, toast } from 'react-toastify';
+import { FirebaseContext } from "../../FirebaseContext";
+
 
 function Setting() {
+    const { config } = useContext(FirebaseContext);
     const [shouldShowMedicalNews, setShouldShowMedicalNews] = useState(false);
+    const [allowThemToSkilPlan, setAllowThemToSkilPlan] = useState(false);
+    const [allowThemToAddPlan, setAllowThemToAddPlan] = useState(false);
+    const [allowThemToDeletePlan, setAllowThemToDeletePlan] = useState(false);
+    const [allowThemToSharePlan, setAllowThemToSharePlan] = useState(false);
+
+
+
     const [notification, setNotification] = useState('');
-    const [buttonIsLoading, setButtonIsLoading] = useState(false);
 
-    const handleShouldShowMedicalNews = () => {
-        setShouldShowMedicalNews(!shouldShowMedicalNews);
-    };
-    const setNotificationToVariable = (event) => {
-        setNotification(event.target.value)
-    };
+    useEffect(() => {
+        const safeData = config || {};
+        if (safeData !== null || safeData.length > 0) {
+            setShouldShowMedicalNews(safeData.shouldShowMedicalNews)
+            setAllowThemToSkilPlan(safeData.allowThemToSkilPlan)
+            setAllowThemToDeletePlan(safeData.allowThemToDeletePlan)
+            setAllowThemToAddPlan(safeData.allowThemToAddPlan)
+            setAllowThemToSharePlan(safeData.allowThemToSharePlan)
+        }
+    }, [config])
 
-    const handleButtonClick = (event) => {
 
+    const handleConfigSaveButtonClick = (event) => {
+        const configObject = {
+            shouldShowMedicalNews: shouldShowMedicalNews,
+            allowThemToSkilPlan:allowThemToSkilPlan,
+            allowThemToDeletePlan:allowThemToDeletePlan,
+            allowThemToAddPlan:allowThemToAddPlan,
+            allowThemToSharePlan:allowThemToSharePlan
+        }
+
+        const db = getDatabase();
+        const url = getConfigsUrl(localStorage.getItem('email'))
+        set(ref(db, url), configObject)
+            .then(() => {
+                successToast('Config Updated Successfully')
+            })
+            .catch((error) => {
+                errorToast(error.message)
+            });
     }
 
+
+    function errorToast(message) {
+        toast.warn(message, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light"
+        });
+    }
+
+
+    function successToast(message) {
+        toast.success(message, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light"
+        });
+    }
+
+
     return (<div className="fade-in root-settings">
+        <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+        />
         <div className="settings-grid-container">
 
             <div className="settings-view-outer">
@@ -39,12 +113,36 @@ function Setting() {
             <div className="settings-view-outer">
                 <div className="text-button-right">
                     <p className="settings-title app-download">Configurations</p>
-                    <p className="text-button"> Save </p>
+                    <p className="text-button" onClick={handleConfigSaveButtonClick}> Save </p>
                 </div>
                 <div className="reminder-wrapper">
                     <input type="checkbox" className="pills-check-box" checked={shouldShowMedicalNews}
-                        onChange={handleShouldShowMedicalNews} />
+                        onChange={e => setShouldShowMedicalNews(!shouldShowMedicalNews)} />
                     <p className="pills-reminder-title" >We are eager to show medical news to your loved ones.</p>
+                </div>
+
+                <div className="reminder-wrapper">
+                    <input type="checkbox" className="pills-check-box" checked={allowThemToSkilPlan}
+                        onChange={e => setAllowThemToSkilPlan(!allowThemToSkilPlan)} />
+                    <p className="pills-reminder-title" >Allow them to skip medicine plan.</p>
+                </div>
+
+                <div className="reminder-wrapper">
+                    <input type="checkbox" className="pills-check-box" checked={allowThemToDeletePlan}
+                        onChange={e => setAllowThemToDeletePlan(!allowThemToDeletePlan)} />
+                    <p className="pills-reminder-title" >Allow them to delete medicine plan.</p>
+                </div>
+
+                <div className="reminder-wrapper">
+                    <input type="checkbox" className="pills-check-box" checked={allowThemToAddPlan}
+                        onChange={e => setAllowThemToAddPlan(!allowThemToAddPlan)} />
+                    <p className="pills-reminder-title" >Allow them to add medicine plan.</p>
+                </div>
+
+                <div className="reminder-wrapper">
+                    <input type="checkbox" className="pills-check-box" checked={allowThemToSharePlan}
+                        onChange={e => setAllowThemToSharePlan(!allowThemToSharePlan)} />
+                    <p className="pills-reminder-title" >Allow them to share medicine plan.</p>
                 </div>
             </div>
 
@@ -55,12 +153,13 @@ function Setting() {
                     <p className="text-button"> Sent </p>
                 </div>
                 <div className="sample">
-                <TextArea value={notification} onChange={setNotificationToVariable} title={""} placeholder={"Enter message to sent"} inputType={"text"} height="16.8rem" />
+                    <TextArea value={notification} onChange={e => setNotification(e.target.value)} title={""} placeholder={"Enter message to sent"} inputType={"text"} height="16.8rem" />
                 </div>
-                
+
 
             </div>
         </div>
     </div>)
 }
+
 export default Setting;

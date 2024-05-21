@@ -7,10 +7,13 @@ import Setting from "../settings/Setting";
 import { FirebaseProvider } from "../../FirebaseContext";
 function Base() {
     const [selctedIndex, setSelectedIndex] = useState(0);
+
     const logout = () => {
         localStorage.clear();
         window.location.reload();
     }
+
+
     const handleNavigationSelected = (index) => {
         const oldIndex = selctedIndex
         if (index == -1) {
@@ -20,6 +23,8 @@ function Base() {
             setSelectedIndex(index);
         }
     };
+
+
     return (
         <FirebaseProvider>
             <div className="base-wrapper">
@@ -49,4 +54,6 @@ function Base() {
         </FirebaseProvider>
     )
 }
+
+
 export default Base;

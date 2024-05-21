@@ -8,3 +8,7 @@ export function getPillsUrlForId(email, id) {
 export function getPillsPostUrl(email) {
     return 'data/' + firebaseClearString(email) +"/pillsData/"
 }
+
+export function getConfigsUrl(email) { 
+    return 'data/' + firebaseClearString(email) +"/config/"
+}

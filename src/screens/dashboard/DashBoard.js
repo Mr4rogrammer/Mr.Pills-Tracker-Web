@@ -14,73 +14,20 @@ function DashBoard() {
     const { pillsData } = useContext(FirebaseContext);
     const [dataFromFirebase, setDataFromFirebase, dataRef] = useState(null);
     const [isPageLoaded, setIsPageLoaded] = useState(false);
-    const [emptyScreenMessage, setEmptyScreenMessage] = useState(
-        "Fecthing data of your account.🥺 "
-    );
-    const [emptyScreenMessageIcon, setEmptyScreenMessageIcon] = useState(
-        animationData
-    );
     const [morningCount, setMorningCount, morningCountRef] = useState(0);
     const [afternoonCount, setAfternoonCount, afternoonCountRef] = useState(0);
     const [eveningCount, setEveningCount, eveningCountRef] = useState(0);
     const [skipedPillsPercentage, setSkipedPillsPercentage] = useState(0);
     const [skipedPills, setSkipedPills, skippedRef] = useState(0);
     const [sortedData, setSortedData, sortedDatRef] = useState(null);
-    function processDataForCount(item) {
-        const [hours, minutes] = item.time.split(":");
-        const timeOfDay = getTimeOfDay(hours);
-        if (timeOfDay === "morning") {
-            setMorningCount((prevCount) => prevCount + 1);
-        } else if (timeOfDay === "afternoon") {
-            setAfternoonCount((prevCount) => prevCount + 1);
-        } else if (timeOfDay === "evening") {
-            setEveningCount((prevCount) => prevCount + 1);
-        }
-    }
-    const sortDataByDate = (data) => {
-        return data.sort((a, b) => a.date.localeCompare(b.date));
-    };
-    function sortTheDataBasedONDate(data) {
-        const eventsArray = Object.keys(data).map((key) => ({
-            id: key,
-            ...data[key],
-        }));
-        const sortedEvents = sortDataByDate(eventsArray);
-        if (sortedEvents.length > 6) {
-            setSortedData(sortedEvents.slice(0, 6));
-        } else {
-            setSortedData(sortedEvents);
-        }
-    }
-    function resetExisitingData() {
-        setMorningCount(0);
-        setAfternoonCount(0);
-        setEveningCount(0);
-    }
-    function skipedPillsPercentageCalculate() {
-        const pillsTaken =
-            morningCountRef.current +
-            afternoonCountRef.current +
-            eveningCountRef.current -
-            skippedRef.current;
-        const percentageTaken =
-            (pillsTaken /
-                (morningCountRef.current +
-                    afternoonCountRef.current +
-                    eveningCountRef.current)) *
-            100;
-        setSkipedPillsPercentage(Math.ceil(percentageTaken));
-    }
-    function processDatForDashBoard(dataFromFirebase) {
-        resetExisitingData();
-        if (dataFromFirebase != null) {
-            Object.keys(dataFromFirebase).map((item) => {
-                processDataForCount(dataFromFirebase[item]);
-            });
-            setSkipedPills(1);
-            skipedPillsPercentageCalculate();
-        }
-    }
+    const [emptyScreenMessage, setEmptyScreenMessage] = useState(
+        "Fecthing data of your account.🥺 "
+    );
+    const [emptyScreenMessageIcon, setEmptyScreenMessageIcon] = useState(
+        animationData
+    );
+
+
     useEffect(() => {
         const data = pillsData
         setDataFromFirebase(null);
@@ -95,6 +42,75 @@ function DashBoard() {
             sortTheDataBasedONDate(dataRef.current);
         }
     }, [pillsData]);
+
+
+    function processDataForCount(item) {
+        const [hours, minutes] = item.time.split(":");
+        const timeOfDay = getTimeOfDay(hours);
+        if (timeOfDay === "morning") {
+            setMorningCount((prevCount) => prevCount + 1);
+        } else if (timeOfDay === "afternoon") {
+            setAfternoonCount((prevCount) => prevCount + 1);
+        } else if (timeOfDay === "evening") {
+            setEveningCount((prevCount) => prevCount + 1);
+        }
+    }
+
+
+    const sortDataByDate = (data) => {
+        return data.sort((a, b) => a.date.localeCompare(b.date));
+    };
+
+
+    function sortTheDataBasedONDate(data) {
+        const eventsArray = Object.keys(data).map((key) => ({
+            id: key,
+            ...data[key],
+        }));
+        const sortedEvents = sortDataByDate(eventsArray);
+        if (sortedEvents.length > 6) {
+            setSortedData(sortedEvents.slice(0, 6));
+        } else {
+            setSortedData(sortedEvents);
+        }
+    }
+
+
+    function resetExisitingData() {
+        setMorningCount(0);
+        setAfternoonCount(0);
+        setEveningCount(0);
+    }
+
+
+    function skipedPillsPercentageCalculate() {
+        const pillsTaken =
+            morningCountRef.current +
+            afternoonCountRef.current +
+            eveningCountRef.current -
+            skippedRef.current;
+        const percentageTaken =
+            (pillsTaken /
+                (morningCountRef.current +
+                    afternoonCountRef.current +
+                    eveningCountRef.current)) *
+            100;
+        setSkipedPillsPercentage(Math.ceil(percentageTaken));
+    }
+
+
+    function processDatForDashBoard(dataFromFirebase) {
+        resetExisitingData();
+        if (dataFromFirebase != null) {
+            Object.keys(dataFromFirebase).map((item) => {
+                processDataForCount(dataFromFirebase[item]);
+            });
+            setSkipedPills(1);
+            skipedPillsPercentageCalculate();
+        }
+    }
+
+
     return (
         <>
             {isPageLoaded ? (
@@ -322,4 +338,6 @@ function DashBoard() {
         </>
     );
 }
+
+
 export default DashBoard;

@@ -28,6 +28,38 @@ function Pills({ editKey, isEditable, moveToPillList }) {
     const [usedPills, setUsedPills] = useState("0");
     const [buttonIsLoading, setButtonIsLoading] = useState(false);
     const [selectedicon, setSelectedIcon] = useState(0)
+    const [hideSpinner, setHideSpinner] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setHideSpinner(true);
+        }, 1500);
+        return () => clearTimeout(timer);
+    }, []);
+
+
+    useEffect(() => {
+        if (editKey !== undefined && editKey !== null && editKey !== "") {
+            const safeData = pillsData || {};
+            Object.keys(safeData).map((key, index) => {
+                if (key === editKey) {
+                    const localData = safeData[key];
+                    setPillName(localData.pillName);
+                    setPillDiscription(localData.pillDiscription);
+                    setDate(localData.date);
+                    setTime(localData.time);
+                    setNoOfDays(localData.noOfDay);
+                    setNotification(localData.notification);
+                    setCount(localData.count);
+                    setIsChecked(localData.everyFiveReminder);
+                    setAfterOrBefore(localData.afterOrBefore);
+                    setUsedPills(localData.usedPills);
+                    setSelectedIcon(localData.selectedicon);
+                }
+            });
+        }
+    }, [editKey])
+    
 
     const areAllEmpty = () => {
         if (pillName === undefined || pillName.trim().length === 0) {
@@ -56,34 +88,8 @@ function Pills({ editKey, isEditable, moveToPillList }) {
         }
         return false;
     };
-    const [hideSpinner, setHideSpinner] = useState(false);
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setHideSpinner(true);
-        }, 1500);
-        return () => clearTimeout(timer);
-    }, []);
-    useEffect(() => {
-        if (editKey !== undefined && editKey !== null && editKey !== "") {
-            const safeData = pillsData || {};
-            Object.keys(safeData).map((key, index) => {
-                if (key === editKey) {
-                    const localData = safeData[key];
-                    setPillName(localData.pillName);
-                    setPillDiscription(localData.pillDiscription);
-                    setDate(localData.date);
-                    setTime(localData.time);
-                    setNoOfDays(localData.noOfDay);
-                    setNotification(localData.notification);
-                    setCount(localData.count);
-                    setIsChecked(localData.everyFiveReminder);
-                    setAfterOrBefore(localData.afterOrBefore);
-                    setUsedPills(localData.usedPills);
-                    setSelectedIcon(localData.selectedicon);
-                }
-            });
-        }
-    }, [editKey])
+
+
     const resetFormData = () => {
         setPillName('');
         setPillDiscription('');
@@ -95,6 +101,8 @@ function Pills({ editKey, isEditable, moveToPillList }) {
         setAfterOrBefore('');
         setIsChecked(false);
     };
+
+
     function writeAllDataToDatabase() {
         const databaseObject = {
             pillName: pillName,
@@ -138,6 +146,8 @@ function Pills({ editKey, isEditable, moveToPillList }) {
             });
         }
     }
+
+
     function errorToast(message) {
         toast.warn(message, {
             position: "top-center",
@@ -150,6 +160,8 @@ function Pills({ editKey, isEditable, moveToPillList }) {
             theme: "light"
         });
     }
+
+
     function successToast(message) {
         toast.success(message, {
             position: "top-center",
@@ -162,33 +174,7 @@ function Pills({ editKey, isEditable, moveToPillList }) {
             theme: "light"
         });
     }
-    const handleCheckboxChange = () => {
-        setIsChecked(!isChecked);
-    };
-    const setPillNameToVariable = (event) => {
-        setPillName(event.target.value)
-    };
-    const setPillDiscriptionToVariable = (event) => {
-        setPillDiscription(event.target.value)
-    };
-    const setDateToVariable = (event) => {
-        setDate(event.target.value)
-    };
-    const setTimeToVariable = (event) => {
-        setTime(event.target.value)
-    };
-    const setNoOfDaysToVariable = (event) => {
-        setNoOfDays(event.target.value)
-    };
-    const setNotificationToVariable = (event) => {
-        setNotification(event.target.value)
-    };
-    const setCountToVariable = (event) => {
-        setCount(event.target.value)
-    };
-    const handleRadioChange = (value) => {
-        setAfterOrBefore(value);
-    };
+
     const getCurrentDate = () => {
         const date = new Date();
         const year = date.getFullYear();
@@ -196,10 +182,14 @@ function Pills({ editKey, isEditable, moveToPillList }) {
         const day = String(date.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
     }
+
+
     const isPastDate = (givenDate) => {
         const currentDate = getCurrentDate();
         return givenDate <= currentDate;
     }
+
+
     const handleButtonClick = (event) => {
         setButtonIsLoading(true)
         const state = areAllEmpty()
@@ -223,6 +213,8 @@ function Pills({ editKey, isEditable, moveToPillList }) {
             }
         }
     };
+
+    
     return (<>
         <div className="fade-in">
             <BarLoader
@@ -247,20 +239,20 @@ function Pills({ editKey, isEditable, moveToPillList }) {
             <p className="new-pill">New Medicine 💚</p>
             <div className="pills-grid-container">
                 <div>
-                    <InputBox value={pillName} onChange={setPillNameToVariable} title={"Medicine Name"} placeholder={"Paracetamol"} inputType={"text"} />
-                    <TextArea value={pillDiscription} onChange={setPillDiscriptionToVariable} title={"Medicine discription"} placeholder={"For treating fever, one of the commonly recommended medications is Paracetamol"} inputType={"text"} />
+                    <InputBox value={pillName} onChange={e => setPillName(e.target.value)} title={"Medicine Name"} placeholder={"Paracetamol"} inputType={"text"} />
+                    <TextArea value={pillDiscription} onChange={e =>  setPillDiscription(e.target.value)} title={"Medicine discription"} placeholder={"For treating fever, one of the commonly recommended medications is Paracetamol"} inputType={"text"} />
                     <p className="pills-input-title ">Take a Medicine after or before food ?</p>
                     <div className="reminder-wrapper">
-                        <input type="radio" className="pills-radio-box" checked={afterOrBefore === "BEFORE"} onChange={() => handleRadioChange("BEFORE")} />
+                        <input type="radio" className="pills-radio-box" checked={afterOrBefore === "BEFORE"} onChange={() => setAfterOrBefore("BEFORE")} />
                         <p className="pills-radio-title">Before</p>
                         <span className="left-margin-20" />
-                        <input type="radio" className="pills-radio-box" checked={afterOrBefore === "AFTER"} onChange={() => handleRadioChange("AFTER")} />
+                        <input type="radio" className="pills-radio-box" checked={afterOrBefore === "AFTER"} onChange={() => setAfterOrBefore("AFTER")} />
                         <p className="pills-radio-title">After</p>
                     </div>
                     <span className="left-margin-20" />
                     <div className="reminder-wrapper">
                         <input type="checkbox" className="pills-check-box" checked={isChecked}
-                            onChange={handleCheckboxChange} />
+                            onChange={e => setIsChecked(!isChecked)} />
                         <p className="pills-reminder-title" >Remind every 5 Minutes until they cancel</p>
                     </div>
 
@@ -284,11 +276,11 @@ function Pills({ editKey, isEditable, moveToPillList }) {
                     </div>
                 </div>
                 <div>
-                    <InputBox value={date} onChange={setDateToVariable} title={"Starting Date"} placeholder={"12/12/2020"} inputType={"date"} />
-                    <InputBox value={noOfDay} onChange={setNoOfDaysToVariable} title={"Number of Days"} placeholder={"1"} inputType={"number"} />
-                    <InputBox value={time} onChange={setTimeToVariable} title={"Time"} placeholder={"08:15:PM"} inputType={"time"} />
-                    <InputBox value={count} onChange={setCountToVariable} title={"Medicine’s Counts"} placeholder={"20"} inputType={"number"} />
-                    <InputBox value={notification} onChange={setNotificationToVariable} title={"Notification Message"} placeholder={"Dad time to take tablet"} inputType={"text"} />
+                    <InputBox value={date} onChange={e => setDate(e.target.value)} title={"Starting Date"} placeholder={"12/12/2020"} inputType={"date"} />
+                    <InputBox value={noOfDay} onChange={e =>  setNoOfDays(e.target.value)} title={"Number of Days"} placeholder={"1"} inputType={"number"} />
+                    <InputBox value={time} onChange={e => setTime(e.target.value)} title={"Time"} placeholder={"08:15:PM"} inputType={"time"} />
+                    <InputBox value={count} onChange={e => setCount(e.target.value)} title={"Medicine’s Counts"} placeholder={"20"} inputType={"number"} />
+                    <InputBox value={notification} onChange={e => setNotification(e.target.value)} title={"Notification Message"} placeholder={"Dad time to take tablet"} inputType={"text"} />
                 </div>
             </div>
 

@@ -14,6 +14,8 @@ import animationData from '../../../lotiflies/nodata.json';
 import { getPillsUrlForId } from "../../../config/firebaseUrlBuilder";
 import { convertTo12HourFormat } from "../../Utils";
 import { FirebaseContext } from "../../../FirebaseContext";
+
+
 function ListOfPills({ pillEditFunction }) {
     const { pillsData } = useContext(FirebaseContext);
     const [dataFromFirebase, setDataFromFirebase] = useState(null);
@@ -21,12 +23,28 @@ function ListOfPills({ pillEditFunction }) {
     const [emptyScreenMessage, setEmptyScreenMessage] = useState("No data found for your account.🥺 ")
     const [emptyScreenMessageIcon, setEmptyScreenMessageIcon] = useState(animationData)
     const [expandedItems, setExpandedItems] = useState({});
+
+    useEffect(() => {
+        const safeData = pillsData || {};
+        setDataFromFirebase(null);
+        setDataFromFirebase(safeData);
+        setIsPageLoaded(true)
+        if (safeData == null || safeData.length == 0) {
+            setIsPageLoaded(false);
+            setEmptyScreenMessage("No data found for your account.🥺 ")
+            setEmptyScreenMessageIcon(animationData)
+        }
+    }, [pillsData])
+
+    
     const toggleReadMore = (index) => {
         setExpandedItems((prev) => ({
             ...prev,
             [index]: !prev[index],
         }));
     };
+
+
     function errorToast(message) {
         toast.warn(message, {
             position: "top-center",
@@ -39,6 +57,8 @@ function ListOfPills({ pillEditFunction }) {
             theme: "light"
         });
     }
+
+
     function successToast(message) {
         toast.success(message, {
             position: "top-center",
@@ -51,6 +71,8 @@ function ListOfPills({ pillEditFunction }) {
             theme: "light"
         });
     }
+
+
     function deleteData(key) {
         const db = getDatabase();
         const currentUserEmail = firebaseClearString(localStorage.getItem('email'))
@@ -62,20 +84,12 @@ function ListOfPills({ pillEditFunction }) {
             errorToast(error.message)
         });
     }
+
+
     function editItem(key) {
         pillEditFunction(key)
     }
-    useEffect(() => {
-        const safeData = pillsData || {};
-        setDataFromFirebase(null);
-        setDataFromFirebase(safeData);
-        setIsPageLoaded(true)
-        if (safeData == null || safeData.length == 0) {
-            setIsPageLoaded(false);
-            setEmptyScreenMessage("No data found for your account.🥺 ")
-            setEmptyScreenMessageIcon(animationData)
-        }
-    }, [pillsData])
+
     return (<div className="no-scroll fade-in">
         <BarLoader
             width={"100%"}
