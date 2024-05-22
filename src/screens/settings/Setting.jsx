@@ -8,16 +8,13 @@ import { getConfigsUrl } from "../../config/firebaseUrlBuilder";
 import { getDatabase, ref, set } from "firebase/database";
 import { ToastContainer, toast } from 'react-toastify';
 import { FirebaseContext } from "../../FirebaseContext";
-
-
+import InputBox from "../../component/inputbox/InputBox";
 function Setting() {
     const { config } = useContext(FirebaseContext);
     const [shouldShowMedicalNews, setShouldShowMedicalNews] = useState(false);
     const [allowThemToSkilPlan, setAllowThemToSkilPlan] = useState(false);
-
-
     const [notification, setNotification] = useState('');
-
+    const [notificationTitle, setNotificationTitle] = useState('');
     useEffect(() => {
         const safeData = config || {};
         if (safeData !== null || safeData.length > 0) {
@@ -25,14 +22,11 @@ function Setting() {
             setAllowThemToSkilPlan(safeData.allowThemToSkilPlan)
         }
     }, [config])
-
-
     const handleConfigSaveButtonClick = (event) => {
         const configObject = {
             shouldShowMedicalNews: shouldShowMedicalNews,
-            allowThemToSkilPlan:allowThemToSkilPlan,
+            allowThemToSkilPlan: allowThemToSkilPlan,
         }
-
         const db = getDatabase();
         const url = getConfigsUrl(localStorage.getItem('email'))
         set(ref(db, url), configObject)
@@ -43,8 +37,6 @@ function Setting() {
                 errorToast(error.message)
             });
     }
-
-
     function errorToast(message) {
         toast.warn(message, {
             position: "top-center",
@@ -57,8 +49,6 @@ function Setting() {
             theme: "light"
         });
     }
-
-
     function successToast(message) {
         toast.success(message, {
             position: "top-center",
@@ -71,8 +61,6 @@ function Setting() {
             theme: "light"
         });
     }
-
-
     return (<div className="fade-in root-settings">
         <ToastContainer
             position="top-center"
@@ -87,7 +75,6 @@ function Setting() {
             theme="light"
         />
         <div className="settings-grid-container">
-
             <div className="settings-view-outer">
                 <p className="settings-title app-download">Mr.Medicine Tracking app</p>
                 <div className="mobile-client">
@@ -98,8 +85,6 @@ function Setting() {
                 <img className="qr-logo" src={require('../../images/qr.svg').default} alt='mySvgImage' />
                 <p className="just-scan">Just Scan this Qr Code.</p>
             </div>
-
-
             <div className="settings-view-outer">
                 <div className="text-button-right">
                     <p className="settings-title app-download">Configurations</p>
@@ -110,28 +95,25 @@ function Setting() {
                         onChange={e => setShouldShowMedicalNews(!shouldShowMedicalNews)} />
                     <p className="pills-reminder-title" >We are eager to show medical news to your loved ones.</p>
                 </div>
-
                 <div className="reminder-wrapper">
                     <input type="checkbox" className="pills-check-box" checked={allowThemToSkilPlan}
                         onChange={e => setAllowThemToSkilPlan(!allowThemToSkilPlan)} />
                     <p className="pills-reminder-title" >Allow them to skip medicine plan.</p>
                 </div>
             </div>
-
-
             <div className="settings-view-outer">
-                <div className="text-button-right">
-                    <p className="settings-title app-download">Notification</p>
-                    <p className="text-button"> Sent </p>
+                <div className="settings-flex-div">
+                    <div className="text-button-right">
+                        <p className="settings-title app-download">Notification</p>
+                        <p className="text-button"> Sent </p>
+                    </div>
+                    <div >
+                        <InputBox value={notificationTitle} onChange={e => setNotificationTitle(e.target.value)} title={""} placeholder={"Enter title"} inputType={"text"} isFullScreen={true} />
+                        <TextArea value={notification} onChange={e => setNotification(e.target.value)} title={""} placeholder={"Enter message"} inputType={"text"} isFullScreen={true} />
+                    </div>
                 </div>
-                <div className="sample">
-                    <TextArea value={notification} onChange={e => setNotification(e.target.value)} title={""} placeholder={"Enter message to sent"} inputType={"text"} height="16.8rem" />
-                </div>
-
-
             </div>
         </div>
     </div>)
 }
-
 export default Setting;

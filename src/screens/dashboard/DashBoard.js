@@ -168,7 +168,7 @@ function DashBoard() {
                             </div>
                         </div>
                     </div>
-                    <div className="dashboard-grid-container">
+                    <div className="dashboard-grid-container ">
                         <div className="dashboard-left-view">
                             <p className="progress-title">Progress</p>
                             <center>
