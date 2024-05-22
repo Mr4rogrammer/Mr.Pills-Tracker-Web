@@ -14,10 +14,6 @@ function Setting() {
     const { config } = useContext(FirebaseContext);
     const [shouldShowMedicalNews, setShouldShowMedicalNews] = useState(false);
     const [allowThemToSkilPlan, setAllowThemToSkilPlan] = useState(false);
-    const [allowThemToAddPlan, setAllowThemToAddPlan] = useState(false);
-    const [allowThemToDeletePlan, setAllowThemToDeletePlan] = useState(false);
-    const [allowThemToSharePlan, setAllowThemToSharePlan] = useState(false);
-
 
 
     const [notification, setNotification] = useState('');
@@ -27,9 +23,6 @@ function Setting() {
         if (safeData !== null || safeData.length > 0) {
             setShouldShowMedicalNews(safeData.shouldShowMedicalNews)
             setAllowThemToSkilPlan(safeData.allowThemToSkilPlan)
-            setAllowThemToDeletePlan(safeData.allowThemToDeletePlan)
-            setAllowThemToAddPlan(safeData.allowThemToAddPlan)
-            setAllowThemToSharePlan(safeData.allowThemToSharePlan)
         }
     }, [config])
 
@@ -38,9 +31,6 @@ function Setting() {
         const configObject = {
             shouldShowMedicalNews: shouldShowMedicalNews,
             allowThemToSkilPlan:allowThemToSkilPlan,
-            allowThemToDeletePlan:allowThemToDeletePlan,
-            allowThemToAddPlan:allowThemToAddPlan,
-            allowThemToSharePlan:allowThemToSharePlan
         }
 
         const db = getDatabase();
@@ -125,24 +115,6 @@ function Setting() {
                     <input type="checkbox" className="pills-check-box" checked={allowThemToSkilPlan}
                         onChange={e => setAllowThemToSkilPlan(!allowThemToSkilPlan)} />
                     <p className="pills-reminder-title" >Allow them to skip medicine plan.</p>
-                </div>
-
-                <div className="reminder-wrapper">
-                    <input type="checkbox" className="pills-check-box" checked={allowThemToDeletePlan}
-                        onChange={e => setAllowThemToDeletePlan(!allowThemToDeletePlan)} />
-                    <p className="pills-reminder-title" >Allow them to delete medicine plan.</p>
-                </div>
-
-                <div className="reminder-wrapper">
-                    <input type="checkbox" className="pills-check-box" checked={allowThemToAddPlan}
-                        onChange={e => setAllowThemToAddPlan(!allowThemToAddPlan)} />
-                    <p className="pills-reminder-title" >Allow them to add medicine plan.</p>
-                </div>
-
-                <div className="reminder-wrapper">
-                    <input type="checkbox" className="pills-check-box" checked={allowThemToSharePlan}
-                        onChange={e => setAllowThemToSharePlan(!allowThemToSharePlan)} />
-                    <p className="pills-reminder-title" >Allow them to share medicine plan.</p>
                 </div>
             </div>
 
