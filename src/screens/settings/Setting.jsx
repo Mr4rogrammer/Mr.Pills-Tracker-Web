@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMobileAlt } from '@fortawesome/fontawesome-free-solid'
 import { useState, useContext, useEffect } from "react";
 import TextArea from "../../component/inputbox/TextArea";
-import Button from "../../component/button/Button";
 import { getConfigsUrl } from "../../config/firebaseUrlBuilder";
 import { getDatabase, ref, set } from "firebase/database";
 import { ToastContainer, toast } from 'react-toastify';
@@ -85,7 +84,7 @@ function Setting() {
                 <img className="qr-logo" src={require('../../images/qr.svg').default} alt='mySvgImage' />
                 <p className="just-scan">Just Scan this Qr Code.</p>
             </div>
-            <div className="settings-view-outer">
+            <div className="settings-view-outer none">
                 <div className="text-button-right">
                     <p className="settings-title app-download">Configurations</p>
                     <p className="text-button" onClick={handleConfigSaveButtonClick}> Save </p>
@@ -101,7 +100,7 @@ function Setting() {
                     <p className="pills-reminder-title" >Allow them to skip medicine plan.</p>
                 </div>
             </div>
-            <div className="settings-view-outer">
+            <div className="settings-view-outer none">
                 <div className="settings-flex-div">
                     <div className="text-button-right">
                         <p className="settings-title app-download">Notification</p>

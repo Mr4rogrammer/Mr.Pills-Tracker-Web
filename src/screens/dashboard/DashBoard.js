@@ -309,11 +309,11 @@ function DashBoard() {
                                                                 className="table-heading"
                                                                 style={{ fontSize: "10px" }}
                                                             >
-                                                                {sortedDatRef.current[key].usedPills +
-                                                                    " / " +
-                                                                    sortedDatRef.current[key].count}
+                                                            
+                                                                {(Object.keys(sortedDatRef.current[key]?.takenStatus ?? 0).length) + " / " + (sortedDatRef.current[key]?.count ?? 0)}
                                                             </div>
                                                         </td>
+
                                                     </tr>
                                                 </>
                                             ))}

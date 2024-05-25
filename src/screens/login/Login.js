@@ -79,7 +79,7 @@ function App() {
               />
               <div className="login-button" onClick={handleGoogleAuth}>
                 <img className="google-logo" src={require('../../images/googlelogo.svg').default} alt='mySvgImage' />
-                <p className='login-text'>Access Mr.Pills Tracker</p>
+                <p className='login-text'>Access Mr.Health</p>
               </div>
             </center>
           </div>

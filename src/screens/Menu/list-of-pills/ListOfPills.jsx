@@ -28,6 +28,7 @@ function ListOfPills({ pillEditFunction }) {
         const safeData = pillsData || {};
         setDataFromFirebase(null);
         setDataFromFirebase(safeData);
+
         setIsPageLoaded(true)
         if (safeData == null || safeData.length == 0) {
             setIsPageLoaded(false);
@@ -36,7 +37,7 @@ function ListOfPills({ pillEditFunction }) {
         }
     }, [pillsData])
 
-    
+
     const toggleReadMore = (index) => {
         setExpandedItems((prev) => ({
             ...prev,
@@ -130,7 +131,12 @@ function ListOfPills({ pillEditFunction }) {
                                     <td><div className="table-heading" onClick={() => toggleReadMore(index)}>{dataFromFirebase[key].date}</div></td>
                                     <td><div className="table-heading" onClick={() => toggleReadMore(index)}>{convertTo12HourFormat(dataFromFirebase[key].time)}</div></td>
                                     <td><div className="table-heading" onClick={() => toggleReadMore(index)}>{dataFromFirebase[key].afterOrBefore}</div></td>
-                                    <td><div className="table-heading" onClick={() => toggleReadMore(index)}>{dataFromFirebase[key].usedPills + " / " + dataFromFirebase[key].count}</div></td>
+                                    <td>
+                                        <div className="table-heading" onClick={() => toggleReadMore(index)}>
+                                            {(Object.keys(dataFromFirebase[key]?.takenStatus ?? 0).length) + " / " + (dataFromFirebase[key]?.count ?? 0)}
+                                        </div>
+                                    </td>
+
                                     <td>
                                         <div className="action-button">
                                             <div color="error" className="edit-action-button" onClick={(e) => editItem(key)}><EditIcon /></div>

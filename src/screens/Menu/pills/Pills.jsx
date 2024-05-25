@@ -25,7 +25,6 @@ function Pills({ editKey, isEditable, moveToPillList }) {
     const [count, setCount] = useState('');
     const [afterOrBefore, setAfterOrBefore] = useState('');
     const [isChecked, setIsChecked] = useState(false);
-    const [usedPills, setUsedPills] = useState("0");
     const [buttonIsLoading, setButtonIsLoading] = useState(false);
     const [selectedicon, setSelectedIcon] = useState(0)
     const [hideSpinner, setHideSpinner] = useState(false);
@@ -53,7 +52,7 @@ function Pills({ editKey, isEditable, moveToPillList }) {
                     setCount(localData.count);
                     setIsChecked(localData.everyFiveReminder);
                     setAfterOrBefore(localData.afterOrBefore);
-                    setUsedPills(localData.usedPills);
+                
                     setSelectedIcon(localData.selectedicon);
                 }
             });
@@ -115,7 +114,6 @@ function Pills({ editKey, isEditable, moveToPillList }) {
             everyFiveReminder: isChecked,
             afterOrBefore: afterOrBefore,
             selectedicon:selectedicon,
-            usedPills: (isEditable) ? usedPills : "0"
         }
         const db = getDatabase();
         const currentUserEmail = firebaseClearString(localStorage.getItem('email'))
@@ -200,7 +198,7 @@ function Pills({ editKey, isEditable, moveToPillList }) {
         } else {
             const numberOdDays = parseInt(noOfDay);
             const pillsCount = parseInt(count);
-            if (isPastDate(date)) {
+            if (isPastDate(date) && isEditable == false) {
                 errorToast("Date should be greater than current date. 🤭");
                 setButtonIsLoading(false);
                 return;
