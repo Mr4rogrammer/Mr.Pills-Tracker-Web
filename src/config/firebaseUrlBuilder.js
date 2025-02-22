@@ -12,3 +12,8 @@ export function getPillsPostUrl(email) {
 export function getConfigsUrl(email) { 
     return 'data/' + firebaseClearString(email) +"/config/"
 }
+
+
+export function getBookingUrl(email) { 
+    return 'data/' + firebaseClearString(email) +"/booking/"
+}

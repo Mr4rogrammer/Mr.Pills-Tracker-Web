@@ -3,6 +3,8 @@ import { getPillsUrl } from './config/firebaseUrlBuilder';
 import { firebaseClearString } from './screens/Utils';
 import { getDatabase, ref, onValue } from "firebase/database";
 import { getConfigsUrl } from './config/firebaseUrlBuilder';
+import { getBookingUrl } from './config/firebaseUrlBuilder';
+
 
 const FirebaseContext = createContext();
 const FirebaseProvider = ({ children }) => {
@@ -10,10 +12,12 @@ const FirebaseProvider = ({ children }) => {
     const url = getPillsUrl(currentUserEmail)
     const [pillsData, setPillsData] = useState(null);
     const [config, setConfig] = useState(null);
+    const [booking, setBooking] = useState(null);
 
     const contextValue = {
         pillsData,
-        config
+        config,
+        booking
       };
     
     useEffect(() => {
@@ -28,6 +32,13 @@ const FirebaseProvider = ({ children }) => {
         onValue(configRef, (snapshot) => {
             const data = snapshot.val();
             setConfig(data);
+        });
+
+        const bookingRef = ref(database, getBookingUrl(currentUserEmail));
+        onValue(bookingRef, (snapshot) => {
+            const data = snapshot.val();
+            console.log(data);
+            setBooking(data);
         });
     }, []);
     return (

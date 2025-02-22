@@ -4,6 +4,7 @@ import "./Base.css"
 import DashBoard from "../dashboard/DashBoard";
 import Menu from "../Menu/Menu";
 import Setting from "../settings/Setting";
+import Booking from "../booking/Booking"
 import { FirebaseProvider } from "../../FirebaseContext";
 function Base() {
     const [selctedIndex, setSelectedIndex] = useState(0);
@@ -43,6 +44,8 @@ function Base() {
                                             return <Menu />;
                                         } else if (selctedIndex === 2) {
                                             return <Setting />
+                                        } else if (selctedIndex === 3) {
+                                            return <Booking />
                                         }
                                     })()
                                 }
